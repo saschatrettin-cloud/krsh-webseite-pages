@@ -1,4 +1,14 @@
-User-agent: *
-Disallow:
+# STAGING — Indexierung vollständig gesperrt.
+#
+# Solange die Seite unter neu.krsh.de (oder einer GitHub-Pages-Subdomain)
+# ausgeliefert wird, dürfen Suchmaschinen die Inhalte nicht erfassen.
+# Sobald die Seite produktiv unter www.krsh.de läuft, muss diese Datei
+# auf "Disallow:" (= alles erlaubt) umgestellt und der noindex-Schalter
+# in src/config/site.ts (isStaging = false) abgeschaltet werden.
 
-Sitemap: https://neu.krsh.de/sitemap-index.xml
+User-agent: *
+Disallow: /
+
+# Sitemap absichtlich nicht referenzieren, solange Disallow: / aktiv ist.
+# Nach Go-Live wieder aktivieren:
+# Sitemap: https://www.krsh.de/sitemap-index.xml
