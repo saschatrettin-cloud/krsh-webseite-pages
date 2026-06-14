@@ -615,6 +615,45 @@
       box-shadow: var(--shadow);
     }
 
+    .fact,
+    .principle,
+    .brand-panel,
+    .brand-note,
+    .risk,
+    .example,
+    .tip,
+    .matrix,
+    .rule,
+    .prompt,
+    .check label,
+    details,
+    .final {
+      transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease;
+      will-change: transform;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .fact:hover,
+      .principle:hover,
+      .brand-panel:hover,
+      .brand-note:hover,
+      .risk:hover,
+      .example:hover,
+      .tip:hover,
+      .matrix:hover,
+      .rule:hover,
+      .prompt:hover,
+      .check label:hover,
+      details:hover,
+      .final:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 38px rgba(21, 33, 43, 0.13);
+      }
+    }
+
     .footer {
       border-top: 1px solid var(--line);
       background: #10283e;
@@ -678,6 +717,22 @@
         animation-iteration-count: 1 !important;
         scroll-behavior: auto !important;
         transition-duration: 0.001ms !important;
+      }
+
+      .fact:hover,
+      .principle:hover,
+      .brand-panel:hover,
+      .brand-note:hover,
+      .risk:hover,
+      .example:hover,
+      .tip:hover,
+      .matrix:hover,
+      .rule:hover,
+      .prompt:hover,
+      .check label:hover,
+      details:hover,
+      .final:hover {
+        transform: none;
       }
     }
 
