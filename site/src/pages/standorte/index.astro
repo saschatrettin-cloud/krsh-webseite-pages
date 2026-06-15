@@ -1,0 +1,127 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import RightColumn from "../../components/RightColumn.astro";
+import { SITE } from "../../config/site";
+import { breadcrumbSchema } from "../../lib/schema";
+
+const siteOrigin = (Astro.site ?? new URL(SITE.url)).origin;
+const breadcrumbs = [
+  { name: "Startseite", url: "/" },
+  { name: "Standorte", url: "/standorte/" },
+];
+const structuredData = [breadcrumbSchema(siteOrigin, breadcrumbs)];
+---
+
+<BaseLayout
+  title="Standorte"
+  description="Kühnel, Rosenmüller & Kollegen — Hauptsitz Berlin sowie Niederlassungen in Hannover, Kassel und Halle (Saale)."
+  structuredData={structuredData}
+>
+  <div id="content">
+    <div id="col1">
+      <div class="frame frame-default frame-type-header frame-layout-0">
+        <header>
+          <p class="section-label">Standorte</p>
+        </header>
+      </div>
+    </div>
+
+    <div id="col2">
+      <nav class="breadcrumb" aria-label="Sie sind hier">
+        <ol>
+          <li><a href="/">Startseite</a></li>
+          <li><span aria-current="page">Standorte</span></li>
+        </ol>
+      </nav>
+
+      <article class="location-list">
+        <header class="location-head">
+          <h1>Unsere Standorte</h1>
+          <p class="role">Hauptsitz Berlin und drei Niederlassungen</p>
+        </header>
+
+        <section class="lawyer-intro">
+          <p>
+            Kühnel, Rosenmüller & Kollegen ist von vier Standorten aus tätig.
+            Der Hauptsitz liegt in Berlin, dazu kommen Niederlassungen in
+            Hannover, Kassel und Halle (Saale).
+          </p>
+        </section>
+
+        <ul class="location-cards">
+          {SITE.locations.map((loc) => (
+            <li>
+              <a href={`/standorte/${loc.id}/`} class="location-card">
+                <h2>{loc.name}{loc.isMainBranch && " (Hauptsitz)"}</h2>
+                <address>
+                  {loc.streetAddress}<br />
+                  {loc.postalCode} {loc.addressLocality}
+                </address>
+                {loc.telephone && <p class="tel">{loc.telephone}</p>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+
+    <RightColumn />
+
+    <footer>
+      <div class="clear"></div>
+      <div id="foot">
+        <div class="foottext">
+          Rechtsanwälte · Notare · Insolvenzverwalter<br />
+          Fachanwälte für Insolvenzrecht, Arbeitsrecht, Miet- und Wohnungseigentumsrecht
+        </div>
+      </div>
+    </footer>
+  </div>
+</BaseLayout>
+
+<style>
+  .location-cards {
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .location-card {
+    display: block;
+    padding: 14px 16px;
+    background: #f6f6f8;
+    border: 1px solid #e5e5ea;
+    color: #181b1e;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .location-card:hover {
+    background: #eef0f6;
+    color: #181b1e;
+  }
+
+  .location-card h2 {
+    margin: 0 0 6px;
+    color: #375b84;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .location-card address {
+    font-style: normal;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .location-card .tel {
+    margin: 6px 0 0;
+    color: #375b84;
+    font-size: 13px;
+  }
+</style>

@@ -1,0 +1,13 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ContentShell from "../../../components/ContentShell.astro";
+import { lawyers } from "../../../data/lawyers";
+---
+
+<BaseLayout title="Anwälte | Kühnel Rosenmüller & Kollegen">
+  <ContentShell heading="Anwälte" activeLawyers="anwaelte" showLawyersMenu>
+    <ul>
+      {lawyers.map((lawyer) => <li><a href={`/anwaelte-notare/anwaelte/${lawyer.slug}/`}>{lawyer.title}</a></li>)}
+    </ul>
+  </ContentShell>
+</BaseLayout>

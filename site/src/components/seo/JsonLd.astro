@@ -1,0 +1,21 @@
+---
+/**
+ * Rendert ein oder mehrere JSON-LD-Objekte als <script type="application/ld+json">.
+ * Bewusst getrennt von BaseLayout, damit auch einzelne Seiten zusätzliche
+ * Schemata einbinden können.
+ */
+import { cleanSchema } from "../../lib/schema";
+
+interface Props {
+  data: Record<string, unknown> | Array<Record<string, unknown>>;
+}
+
+const { data } = Astro.props;
+const payload = Array.isArray(data) ? data.map(cleanSchema) : cleanSchema(data);
+---
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(payload)}
+/>

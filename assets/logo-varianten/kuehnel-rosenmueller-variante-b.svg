@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="154" viewBox="0 0 640 154" role="img" aria-labelledby="title desc">
+  <title id="title">Kuehnel Rosenmueller Logo Variante B</title>
+  <desc id="desc">Modernes Signet mit klarer herausgearbeiteter Doppel-K-Idee und angeschnittenem linken K.</desc>
+  <rect width="640" height="154" fill="#ffffff"/>
+  <g transform="translate(8 8)">
+    <rect width="138" height="138" fill="#0072ae"/>
+    <path fill="#ffffff" d="M0 58 L39 18 H55 L19 65 L54 120 H38 L0 80 Z"/>
+    <path fill="#ffffff" d="M44 62 L58 62 L58 76 L44 76 L32 69 Z"/>
+    <rect x="64" y="18" width="17" height="102" fill="#ffffff"/>
+    <path fill="#ffffff" d="M81 64 L116 18 H132 L96 68 Z"/>
+    <path fill="#ffffff" d="M81 74 L96 70 L132 120 H116 Z"/>
+  </g>
+  <g fill="#0072ae" font-family="Montserrat, Avenir Next, Arial, Helvetica, sans-serif" font-weight="600" letter-spacing="2.8">
+    <text x="185" y="65" font-size="40">KÜHNEL</text>
+    <text x="185" y="123" font-size="40">ROSENMÜLLER</text>
+  </g>
+</svg>

@@ -1,0 +1,545 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  pilatesRegistrationConfig,
+  pilatesRegistrationDemoState,
+} from "../../data/pilatesRegistration";
+
+const pagePayload = {
+  config: pilatesRegistrationConfig,
+  demoState: pilatesRegistrationDemoState,
+};
+
+const featureFacts = [
+  { value: "10", label: "Plaetze je Termin" },
+  { value: "2", label: "separate Anmeldelisten" },
+  { value: "13:30 Uhr", label: "automatischer Wochenwechsel" },
+];
+---
+
+<BaseLayout
+  title="Pilates-Anmeldung"
+  description="Interner Prototyp fuer die Pilates-Anmeldung mit zwei Terminlisten, Restplatzanzeige und automatischer Wochenlogik."
+  noindex
+  pageClass="pilates-page"
+>
+  <main class="tool-page">
+    <section class="tool-hero" aria-labelledby="pilates-title">
+      <div class="tool-hero__copy">
+        <p class="eyebrow">Interner Prototyp</p>
+        <h1 id="pilates-title">Pilates-Anmeldung</h1>
+        <p>
+          Der Prototyp bildet zwei getrennte Anmeldelisten fuer Dienstag und
+          Donnerstag ab. Sichtbar sind Teilnehmer, Restplaetze und der
+          automatische Wochenwechsel nach Kursende.
+        </p>
+      </div>
+      <div class="tool-facts" aria-label="Rahmendaten">
+        {featureFacts.map((item) => (
+          <div class="tool-fact">
+            <strong>{item.value}</strong>
+            <span>{item.label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="tool-summary" aria-labelledby="pilates-summary-title">
+      <div class="section-heading section-heading--wide">
+        <p class="eyebrow">Zielbild</p>
+        <h2 id="pilates-summary-title">Schlanke Loesung ohne grosses System</h2>
+        <p>
+          Die sichtbare Bedienoberflaeche ist bereits vorbereitet. Solange noch
+          keine externe API hinterlegt ist, laeuft die Seite im gekennzeichneten
+          Demo-Modus mit lokaler Browser-Speicherung.
+        </p>
+      </div>
+      <div class="tool-summary__grid">
+        <article class="tool-summary__card">
+          <h3>Produktiv sinnvoll</h3>
+          <p>
+            Astro-Seite fuer die Anzeige, kleine geschuetzte API fuer die
+            gemeinsame Datenspeicherung.
+          </p>
+        </article>
+        <article class="tool-summary__card">
+          <h3>Datensparsam</h3>
+          <p>
+            Fuer den Start genuegt der Name je Anmeldung. Weitere Angaben sind
+            derzeit nicht erforderlich.
+          </p>
+        </article>
+        <article class="tool-summary__card">
+          <h3>Automatischer Reset</h3>
+          <p>
+            Nach Dienstag bzw. Donnerstag 13:30 Uhr springt die Anmeldung
+            automatisch auf die Folgewoche um.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="tool-app" data-pilates-app aria-labelledby="pilates-app-title">
+      <div class="section-heading">
+        <p class="eyebrow">Anmeldeansicht</p>
+        <h2 id="pilates-app-title">Wochenlisten fuer beide Kurstermine</h2>
+        <p>
+          Die nachstehende Ansicht zeigt die spaetere Nutzerfuehrung bereits in
+          der Website. Im Demo-Modus ist der Stand nur im aktuellen Browser
+          sichtbar.
+        </p>
+      </div>
+
+      <div class="tool-banner" data-banner role="status" aria-live="polite">
+        Lade Anmeldestand...
+      </div>
+
+      <div class="tool-notes">
+        <h3>Hinweise</h3>
+        <ul>
+          {pilatesRegistrationConfig.notes.map((note) => (
+            <li>{note}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="pilates-slot-grid">
+        {pilatesRegistrationConfig.slots.map((slot) => (
+          <article class="pilates-slot-card" data-slot-card={slot.id}>
+            <header class="pilates-slot-card__header">
+              <div>
+                <p class="eyebrow">{slot.shortLabel}</p>
+                <h3>{slot.label}</h3>
+              </div>
+              <span class="slot-badge" data-field="badge">Wird geladen</span>
+            </header>
+
+            <p class="pilates-slot-card__date" data-field="target-date">
+              Anmeldetermin wird geladen...
+            </p>
+
+            <div class="pilates-metrics" aria-label={`Kennzahlen ${slot.label}`}>
+              <div class="pilates-metric">
+                <span>Anmeldungen</span>
+                <strong data-field="registered-count">-</strong>
+              </div>
+              <div class="pilates-metric">
+                <span>Freie Plaetze</span>
+                <strong data-field="free-count">-</strong>
+              </div>
+              <div class="pilates-metric">
+                <span>Kursbeginn</span>
+                <strong>{slot.courseTimeLabel}</strong>
+              </div>
+            </div>
+
+            <p class="pilates-slot-card__meta">
+              Naechster Reset:
+              <strong data-field="reset-at">-</strong>
+            </p>
+
+            <section class="pilates-attendees">
+              <h4>Angemeldete Personen</h4>
+              <p class="pilates-attendees__empty" data-field="empty-state">
+                Noch keine Anmeldung vorhanden.
+              </p>
+              <ol class="pilates-attendees__list" data-field="attendee-list"></ol>
+            </section>
+
+            <form class="pilates-form" data-slot-form={slot.id}>
+              <label class="pilates-form__label">
+                Name
+                <input
+                  class="pilates-form__input"
+                  type="text"
+                  name="name"
+                  maxlength="80"
+                  autocomplete="name"
+                  required
+                />
+              </label>
+              <button class="button button--primary pilates-form__submit" type="submit">
+                Anmelden
+              </button>
+              <p class="pilates-form__feedback" data-field="form-feedback">
+                Demo-Modus: Speicherung nur im aktuellen Browser.
+              </p>
+            </form>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <div
+    id="pilates-registration-config"
+    data-config={JSON.stringify(pagePayload)}
+    hidden
+  ></div>
+
+  <script is:inline>
+    const configNode = document.getElementById("pilates-registration-config");
+    const appRoot = document.querySelector("[data-pilates-app]");
+
+    if (configNode && appRoot) {
+      const payload = JSON.parse(configNode.getAttribute("data-config") || "{}");
+      const config = payload.config || {};
+      const demoState = payload.demoState || {};
+      const slotCards = Array.from(appRoot.querySelectorAll("[data-slot-card]"));
+      const banner = appRoot.querySelector("[data-banner]");
+      const dateFormatter = new Intl.DateTimeFormat("de-DE", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+      const dateTimeFormatter = new Intl.DateTimeFormat("de-DE", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      let currentMode = config.apiUrl ? "api" : "demo";
+
+      const addDays = (date, days) => {
+        const copy = new Date(date);
+        copy.setDate(copy.getDate() + days);
+        return copy;
+      };
+
+      const normalizeName = (name) => name.trim().replace(/\s+/g, " ").toLowerCase();
+
+      const toOccurrenceDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      };
+
+      const getOccurrenceInfo = (slot) => {
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const delta = slot.weekday - now.getDay();
+        const thisSlotDate = addDays(today, delta);
+        const resetAt = new Date(
+          thisSlotDate.getFullYear(),
+          thisSlotDate.getMonth(),
+          thisSlotDate.getDate(),
+          slot.resetHour,
+          slot.resetMinute,
+          0,
+          0
+        );
+
+        if (now >= resetAt) {
+          const nextDate = addDays(thisSlotDate, 7);
+          return {
+            occurrenceDate: toOccurrenceDate(nextDate),
+            courseDateLabel: dateFormatter.format(nextDate),
+            resetAtIso: new Date(
+              nextDate.getFullYear(),
+              nextDate.getMonth(),
+              nextDate.getDate(),
+              slot.resetHour,
+              slot.resetMinute,
+              0,
+              0
+            ).toISOString(),
+            resetAtLabel: dateTimeFormatter.format(
+              new Date(
+                nextDate.getFullYear(),
+                nextDate.getMonth(),
+                nextDate.getDate(),
+                slot.resetHour,
+                slot.resetMinute,
+                0,
+                0
+              )
+            ),
+          };
+        }
+
+        return {
+          occurrenceDate: toOccurrenceDate(thisSlotDate),
+          courseDateLabel: dateFormatter.format(thisSlotDate),
+          resetAtIso: resetAt.toISOString(),
+          resetAtLabel: dateTimeFormatter.format(resetAt),
+        };
+      };
+
+      const getDemoStorageKey = (slotId, occurrenceDate) =>
+        `krsh-pilates-demo::${slotId}::${occurrenceDate}`;
+
+      const loadDemoEntries = (slotId, occurrenceDate) => {
+        const storageKey = getDemoStorageKey(slotId, occurrenceDate);
+        const storedValue = window.localStorage.getItem(storageKey);
+
+        if (storedValue) {
+          try {
+            const parsed = JSON.parse(storedValue);
+            if (Array.isArray(parsed)) {
+              return parsed;
+            }
+          } catch {
+            window.localStorage.removeItem(storageKey);
+          }
+        }
+
+        return Array.isArray(demoState[slotId]) ? [...demoState[slotId]] : [];
+      };
+
+      const saveDemoEntries = (slotId, occurrenceDate, entries) => {
+        const storageKey = getDemoStorageKey(slotId, occurrenceDate);
+        window.localStorage.setItem(storageKey, JSON.stringify(entries));
+      };
+
+      const buildSlotState = (slot, entries) => {
+        const occurrence = getOccurrenceInfo(slot);
+        const attendees = [...entries]
+          .sort((left, right) => new Date(left.createdAt) - new Date(right.createdAt))
+          .slice(0, config.capacityPerSlot || 10);
+        const registeredCount = attendees.length;
+        const freeCount = Math.max((config.capacityPerSlot || 10) - registeredCount, 0);
+
+        return {
+          ...slot,
+          ...occurrence,
+          attendees,
+          registeredCount,
+          freeCount,
+          isOpen: freeCount > 0,
+        };
+      };
+
+      const createDemoState = () => ({
+        mode: "demo",
+        generatedAt: new Date().toISOString(),
+        slots: (config.slots || []).map((slot) => {
+          const occurrence = getOccurrenceInfo(slot);
+          const entries = loadDemoEntries(slot.id, occurrence.occurrenceDate);
+          return buildSlotState(slot, entries);
+        }),
+      });
+
+      const updateBanner = (state, message) => {
+        if (!banner) return;
+
+        if (message) {
+          banner.textContent = message;
+          return;
+        }
+
+        if (state.mode === "api") {
+          banner.textContent =
+            "Produktivmodus: gemeinsamer Anmeldestand ueber die hinterlegte API.";
+          return;
+        }
+
+        banner.textContent =
+          "Demo-Modus: Der Anmeldestand wird nur lokal im aktuellen Browser gespeichert.";
+      };
+
+      const renderSlot = (slotState) => {
+        const card = slotCards.find((entry) => entry.dataset.slotCard === slotState.id);
+        if (!card) return;
+
+        const badge = card.querySelector('[data-field="badge"]');
+        const targetDate = card.querySelector('[data-field="target-date"]');
+        const registeredCount = card.querySelector('[data-field="registered-count"]');
+        const freeCount = card.querySelector('[data-field="free-count"]');
+        const resetAt = card.querySelector('[data-field="reset-at"]');
+        const emptyState = card.querySelector('[data-field="empty-state"]');
+        const attendeeList = card.querySelector('[data-field="attendee-list"]');
+        const feedback = card.querySelector('[data-field="form-feedback"]');
+        const form = card.querySelector("[data-slot-form]");
+        const nameInput = form?.querySelector('input[name="name"]');
+        const submitButton = form?.querySelector('button[type="submit"]');
+
+        if (badge) {
+          badge.textContent = slotState.isOpen ? "Anmeldung offen" : "Ausgebucht";
+          badge.classList.toggle("slot-badge--closed", !slotState.isOpen);
+        }
+
+        if (targetDate) {
+          targetDate.textContent = `Anmeldung fuer ${slotState.courseDateLabel}`;
+        }
+
+        if (registeredCount) {
+          registeredCount.textContent = String(slotState.registeredCount);
+        }
+
+        if (freeCount) {
+          freeCount.textContent = String(slotState.freeCount);
+        }
+
+        if (resetAt) {
+          resetAt.textContent = slotState.resetAtLabel;
+        }
+
+        if (attendeeList) {
+          attendeeList.innerHTML = "";
+          slotState.attendees.forEach((attendee) => {
+            const item = document.createElement("li");
+            item.textContent = attendee.name;
+            attendeeList.appendChild(item);
+          });
+        }
+
+        if (emptyState) {
+          emptyState.hidden = slotState.attendees.length > 0;
+        }
+
+        if (nameInput) {
+          nameInput.disabled = !slotState.isOpen;
+        }
+
+        if (submitButton) {
+          submitButton.disabled = !slotState.isOpen;
+        }
+
+        if (feedback) {
+          if (!slotState.isOpen) {
+            feedback.textContent = "Der Termin ist derzeit voll belegt.";
+          } else if (currentMode === "api") {
+            feedback.textContent =
+              "Produktivmodus: Die Anmeldung wird gemeinsam fuer alle Nutzer gespeichert.";
+          } else {
+            feedback.textContent =
+              "Demo-Modus: Speicherung nur im aktuellen Browser.";
+          }
+        }
+      };
+
+      const renderState = (state, message) => {
+        updateBanner(state, message);
+        state.slots.forEach((slotState) => renderSlot(slotState));
+      };
+
+      const loadApiState = async () => {
+        if (!config.apiUrl) {
+          return createDemoState();
+        }
+
+        const response = await fetch(config.apiUrl, {
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`API ${response.status}`);
+        }
+
+        const state = await response.json();
+        currentMode = "api";
+        return state;
+      };
+
+      const loadState = async () => {
+        try {
+          const state = await loadApiState();
+          renderState(state);
+        } catch {
+          currentMode = "demo";
+          const fallbackState = createDemoState();
+          renderState(
+            fallbackState,
+            "API derzeit nicht erreichbar. Die Seite verwendet deshalb den lokalen Demo-Modus."
+          );
+        }
+      };
+
+      const submitDemoRegistration = (slotId, name) => {
+        const slot = (config.slots || []).find((entry) => entry.id === slotId);
+        if (!slot) {
+          throw new Error("Unbekannter Termin");
+        }
+
+        const occurrence = getOccurrenceInfo(slot);
+        const entries = loadDemoEntries(slotId, occurrence.occurrenceDate);
+        const normalized = normalizeName(name);
+
+        if (!normalized) {
+          throw new Error("Bitte einen Namen eingeben.");
+        }
+
+        if (entries.some((entry) => normalizeName(entry.name) === normalized)) {
+          throw new Error("Dieser Name ist fuer den Termin bereits eingetragen.");
+        }
+
+        if (entries.length >= (config.capacityPerSlot || 10)) {
+          throw new Error("Der Termin ist bereits voll.");
+        }
+
+        entries.push({
+          name: name.trim(),
+          createdAt: new Date().toISOString(),
+        });
+        saveDemoEntries(slotId, occurrence.occurrenceDate, entries);
+
+        const nextState = createDemoState();
+        renderState(nextState, "Demo-Modus: Anmeldung lokal gespeichert.");
+      };
+
+      const submitApiRegistration = async (slotId, name) => {
+        const response = await fetch(config.apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            slotId,
+            name: name.trim(),
+          }),
+        });
+
+        const payload = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          throw new Error(payload?.message || "Anmeldung konnte nicht gespeichert werden.");
+        }
+
+        currentMode = "api";
+        renderState(payload, "Produktivmodus: Anmeldung gespeichert.");
+      };
+
+      appRoot.querySelectorAll("[data-slot-form]").forEach((form) => {
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const formElement = event.currentTarget;
+          const slotId = formElement.getAttribute("data-slot-form");
+          const formData = new FormData(formElement);
+          const rawName = String(formData.get("name") || "").trim();
+
+          if (!rawName) {
+            updateBanner(createDemoState(), "Bitte einen Namen eingeben.");
+            return;
+          }
+
+          try {
+            if (config.apiUrl) {
+              await submitApiRegistration(slotId, rawName);
+            } else {
+              submitDemoRegistration(slotId, rawName);
+            }
+
+            formElement.reset();
+          } catch (error) {
+            const message =
+              error instanceof Error
+                ? error.message
+                : "Die Anmeldung konnte nicht verarbeitet werden.";
+            updateBanner(createDemoState(), message);
+          }
+        });
+      });
+
+      loadState();
+    }
+  </script>
+</BaseLayout>

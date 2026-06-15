@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ContentShell from "../../../components/ContentShell.astro";
+
+const sections = [
+  {
+    heading: "Private Insolvenzschuldner",
+    links: [
+      { href: "/fileadmin/user_upload/Dokumente/Insolvenzinformationen/Merkblatt_zur_Restschuldbefreiung_Stand_20240813.pdf", label: "Merkblatt zur Restschuldbefreiung" },
+    ],
+  },
+  {
+    heading: "Merkblätter für Gläubiger und Arbeitnehmer",
+    links: [
+      { href: "/fileadmin/user_upload/Dokumente/Insolvenzinformationen/Merkblatt_Insolvenzgeld_Stand_20230731.pdf", label: "Merkblatt Insolvenzgeld für Arbeitnehmer" },
+      { href: "/fileadmin/user_upload/Dokumente/Insolvenzinformationen/Merkblatt_fuer_Insolvenzglaeubiger_Stand_20230809.pdf", label: "Merkblatt für Insolvenzgläubiger" },
+    ],
+  },
+  {
+    heading: "Formulare",
+    links: [
+      { href: "/fileadmin/user_upload/Dokumente/Insolvenzinformationen/Anmeldeformular_38_InsO_Stand_20250129_Formular.pdf", label: "Anmeldeformular § 38 InsO" },
+      { href: "/fileadmin/user_upload/Dokumente/Insolvenzinformationen/Anmeldeformular_39_InsO_Stand_20250129_Formular.pdf", label: "Anmeldeformular § 39 InsO" },
+      { href: "/fileadmin/user_upload/Dokumente/Insolvenzinformationen/Online_Formular_Fragebogen___Schweigepflichtentbindung_jur_IS.pdf", label: "Fragebogen und Schweigepflichtentbindungserklärung" },
+      { href: "/fileadmin/user_upload/Dokumente/Insolvenzinformationen/Questionnaire_and_confidentiality_agreement_engl_122025.pdf", label: "Questionnaire and Confidentiality Agreement" },
+    ],
+  },
+  {
+    heading: "Anleitungen",
+    links: [
+      { href: "/fileadmin/user_upload/Dokumente/Insolvenzinformationen/Anleitung_zur_Anmeldung_von_Forderungen_im_GIS_Stand_20250129.pdf", label: "Anleitung zur Anmeldung von Forderungen im GIS" },
+    ],
+  },
+];
+---
+
+<BaseLayout title="Informationen | Kühnel Rosenmüller & Kollegen">
+  <ContentShell heading="Informationen" activeInsolvency="informationen" showInsolvencyMenu rightImageSrc="/assets/krsh/konfr_4og3.jpg" rightImageAlt="Konferenzraum" rightImageWidth={215} rightImageHeight={215}>
+    {sections.map((section) => (
+      <div class="frame frame-default frame-type-textmedia frame-layout-0">
+        <header><h1>{section.heading}</h1></header>
+        <ul>
+          {section.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        </ul>
+      </div>
+    ))}
+  </ContentShell>
+</BaseLayout>

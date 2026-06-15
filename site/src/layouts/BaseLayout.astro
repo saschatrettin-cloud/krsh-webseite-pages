@@ -1,0 +1,263 @@
+---
+import "../styles/global.css";
+import { SITE, isStaging } from "../config/site";
+import { organizationSchema } from "../lib/schema";
+import JsonLd from "../components/seo/JsonLd.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+interface Props {
+  /** Titel der Seite ohne Marken-Suffix — wird automatisch ergänzt. */
+  title: string;
+  /** Falls bereits ein voller Titel inkl. Marken-Suffix übergeben wird. */
+  fullTitle?: string;
+  description?: string;
+  /** Pfad oder volle URL eines Open-Graph-Bildes (1200x630 empfohlen). */
+  ogImage?: string;
+  /** Erzwingt noindex, unabhängig vom Staging-Schalter. */
+  noindex?: boolean;
+  /**
+   * Zusätzliche JSON-LD-Objekte, die diese Seite ausgeben soll (z. B.
+   * Person-Schema auf Anwaltsseiten, Breadcrumbs, FAQ).
+   */
+  structuredData?: Array<Record<string, unknown>>;
+  pageClass?: string;
+}
+
+type NavItem = {
+  label: string;
+  href?: string;
+  external?: boolean;
+  featured?: boolean;
+  items?: NavItem[];
+  group?: boolean;
+};
+
+const {
+  title,
+  fullTitle,
+  description = SITE.defaultDescription,
+  ogImage = SITE.defaultOgImage,
+  noindex,
+  structuredData = [],
+  pageClass = "onecol",
+} = Astro.props;
+
+const computedTitle = fullTitle ?? `${title} | ${SITE.name}`;
+
+// Astro.site stammt aus astro.config.mjs. URL-Konstruktor erlaubt es,
+// pathname relativ aufzulösen.
+const siteOrigin = (Astro.site ?? new URL(SITE.url)).origin;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const absoluteOg = ogImage.startsWith("http")
+  ? ogImage
+  : siteOrigin + ogImage;
+
+const shouldNoindex = noindex ?? isStaging;
+const robotsValue = shouldNoindex
+  ? "noindex,nofollow,noarchive,nosnippet"
+  : "index,follow,max-image-preview:large";
+
+// Organisations-Schema steht auf jeder Seite einmal im <head>.
+const orgSchema = organizationSchema(siteOrigin);
+const allSchemas = [orgSchema, ...structuredData];
+
+const navItems: NavItem[] = [
+  {
+    label: "Leistungen",
+    href: "/insolvenzverwaltung/insolvenzverwalter/",
+    items: [
+      { label: "Insolvenzverwaltung", href: "/insolvenzverwaltung/insolvenzverwalter/" },
+      { label: "Sanierung", href: "/sanierung/" },
+      { label: "StaRUG", href: "/starug/" },
+      { label: "Schutzschirm / Eigenverwaltung", href: "/schutzschirm-eigenverwaltung/" },
+    ],
+  },
+  {
+    label: "Verfahren",
+    href: "/insolvenzverwaltung/insolvenzverfahren/",
+    items: [
+      { label: "Aktuelle Verfahren", href: "/insolvenzverwaltung/insolvenzverfahren/" },
+      {
+        label: "GIS Gläubigerinformation",
+        href: "https://www.glaeubigerinformation.de/t/191/proceeding-search",
+        external: true,
+      },
+      { label: "Informationen", href: "/insolvenzverwaltung/informationen/" },
+      { label: "Gerichte", href: "/insolvenzverwaltung/gerichte/" },
+      { label: "Resultate", href: "/insolvenzverwaltung/resultate/" },
+      { label: "Kosten", href: "/insolvenzverwaltung/kosten/" },
+    ],
+  },
+  {
+    label: "Team",
+    href: "/anwaelte-notare/anwaelte/",
+    items: [
+      { label: "Verwalter", group: true },
+      { label: "Christoph Rosenmüller", href: "/anwaelte-notare/anwaelte/ra-christoph-rosenmueller/" },
+      { label: "Dr. Joachim Heitsch", href: "/anwaelte-notare/anwaelte/ra-dr-joachim-heitsch/" },
+      { label: "Hartmut Schweigart", href: "/anwaelte-notare/anwaelte/ra-hartmut-schweigart/" },
+      { label: "Jürgen Nullmeier", href: "/anwaelte-notare/anwaelte/ra-juergen-nullmeier/" },
+      { label: "Dirk Semmelmann", href: "/anwaelte-notare/anwaelte/ra-dirk-semmelmann/" },
+      { label: "Geraldine Mocci", href: "/anwaelte-notare/anwaelte/rain-geraldine-mocci/" },
+      { label: "Prozessabteilung", group: true },
+      { label: "Sascha Trettin", href: "/anwaelte-notare/anwaelte/ra-sascha-trettin/" },
+      { label: "Oliver Ebersbach", href: "/anwaelte-notare/anwaelte/ra-oliver-ebersbach/" },
+    ],
+  },
+  {
+    label: "Notariat",
+    href: "/anwaelte-notare/notare/",
+    featured: true,
+    items: [
+      { label: "Notariat", href: "/anwaelte-notare/notare/" },
+      { label: "Formulare", href: "/anwaelte-notare/formulare/" },
+    ],
+  },
+  { label: "Kontakt", href: "/kontakt/" },
+];
+---
+
+<!doctype html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{computedTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robotsValue} />
+    <link rel="canonical" href={canonical} />
+
+    {/* Open Graph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={computedTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={absoluteOg} />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={computedTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOg} />
+
+    {/* Staging-Warnung im HTML-Kommentar — hilfreich, falls die Seite trotz
+        Disallow doch irgendwo geöffnet wird. */}
+    {isStaging && (
+      <meta name="x-krsh-environment" content="staging" />
+    )}
+
+    {/* Google Search Console Verifikation, sobald ein Code in
+        site.ts → googleSiteVerification gesetzt ist. */}
+    {SITE.googleSiteVerification && (
+      <meta name="google-site-verification" content={SITE.googleSiteVerification} />
+    )}
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {/* JSON-LD: Organisation + seitenspezifische Schemata */}
+    {allSchemas.map((s) => <JsonLd data={s} />)}
+  </head>
+  <body>
+    <div id="page" class={pageClass}>
+      <header class="site-header" data-compact-header>
+        <div class="site-header__inner">
+          <a class="site-brand" href="/" target="_self" aria-label="KRSH Startseite">
+            <img
+              src="/assets/krsh/krsh.jpg"
+              width="1200"
+              height="130"
+              alt="Kühnel Rosenmüller &amp; Kollegen, Rechtsanwälte &amp; Notare"
+              title="Kühnel Rosenmüller &amp; Kollegen, Rechtsanwälte &amp; Notare"
+            />
+          </a>
+
+          <div class="site-header__actions">
+            <a class="site-header__action-primary" href="/karriere/">
+              Karriere
+            </a>
+            <a
+              class="site-header__action-primary"
+              href="https://www.glaeubigerinformation.de/t/191/proceeding-search"
+              target="_blank"
+              rel="noopener"
+              aria-label="GIS Gläubigerinformation öffnen"
+            >
+              GIS
+            </a>
+          </div>
+        </div>
+
+        <nav class="main site-nav" aria-label="Hauptnavigation">
+          <ul class="site-nav__list">
+            {navItems.map((item) => (
+              <li class:list={[item.items && "has-subnav", item.featured && "site-nav__item--featured"]}>
+                <a href={item.href}>{item.label}</a>
+                {item.items && (
+                  <ul class="site-nav__sub">
+                    {item.items.map((subItem) => (
+                      <li>
+                        {subItem.group ? (
+                          <span class="site-nav__group">{subItem.label}</span>
+                        ) : (
+                          <a
+                            href={subItem.href}
+                            target={subItem.external ? "_blank" : undefined}
+                            rel={subItem.external ? "noopener" : undefined}
+                          >
+                            {subItem.label}
+                          </a>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </header>
+
+      <slot />
+
+      <SiteFooter />
+    </div>
+
+    {isStaging && (
+      <div class="staging-badge" aria-hidden="true">
+        STAGING — neu.krsh.de — nicht indexiert
+      </div>
+    )}
+
+    <script>
+      const compactHeader = document.querySelector("[data-compact-header]");
+
+      if (compactHeader) {
+        const syncCompactHeader = () => {
+          compactHeader.classList.toggle("site-header--compact", window.scrollY > 24);
+        };
+
+        syncCompactHeader();
+        window.addEventListener("scroll", syncCompactHeader, { passive: true });
+      }
+    </script>
+
+    <style is:global>
+      .staging-badge {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+        padding: 6px 12px;
+        background: #c0392b;
+        color: #fff;
+        font: 12px/1.2 "Open Sans", Arial, sans-serif;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+      }
+    </style>
+  </body>
+</html>

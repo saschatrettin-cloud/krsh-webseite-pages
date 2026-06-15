@@ -1,0 +1,68 @@
+---
+import RightColumn from "./RightColumn.astro";
+
+interface Props {
+  heading: string;
+  activeService?: "kontakt" | "sitemap" | "datenschutz" | "impressum";
+  activeInsolvency?: "insolvenzverwalter" | "insolvenzverfahren" | "gerichte" | "informationen" | "resultate" | "kosten";
+  activeLawyers?: "anwaelte" | "notare" | "formulare";
+  showServiceMenu?: boolean;
+  showInsolvencyMenu?: boolean;
+  showLawyersMenu?: boolean;
+  rightImageSrc?: string;
+  rightImageAlt?: string;
+  rightImageWidth?: number;
+  rightImageHeight?: number;
+}
+
+const {
+  heading,
+  activeService,
+  activeInsolvency,
+  activeLawyers,
+  showServiceMenu = false,
+  showInsolvencyMenu = false,
+  showLawyersMenu = false,
+  rightImageSrc,
+  rightImageAlt,
+  rightImageWidth,
+  rightImageHeight,
+} = Astro.props;
+---
+
+<main id="content" class="content-shell">
+  <div id="col1">
+    <div class="frame frame-default frame-type-header frame-layout-0">
+      <header>
+        <h1>{heading}</h1>
+      </header>
+    </div>
+  </div>
+
+  <div id="col2">
+    <slot />
+  </div>
+
+  <RightColumn
+    activeService={activeService}
+    activeInsolvency={activeInsolvency}
+    activeLawyers={activeLawyers}
+    showServiceMenu={showServiceMenu}
+    showInsolvencyMenu={showInsolvencyMenu}
+    showLawyersMenu={showLawyersMenu}
+    imageSrc={rightImageSrc}
+    imageAlt={rightImageAlt}
+    imageWidth={rightImageWidth}
+    imageHeight={rightImageHeight}
+  />
+
+  <footer>
+    <div class="clear"></div>
+    <div id="foot">
+      <div class="foottext">
+        Rechtsanwälte · Notare · Insolvenzverwalter<br />
+        Fachanwälte für Insolvenzrecht, Arbeitsrecht, Miet- und Wohnungseigentumsrecht
+      </div>
+    </div>
+  </footer>
+</main>

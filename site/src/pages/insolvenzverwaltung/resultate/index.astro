@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ContentShell from "../../../components/ContentShell.astro";
+
+const kennzahlen = [
+  ["2016", "/fileadmin/user_upload/Dokumente/Kennzahlen/KENNZAHLEN_Stand_31122016_fuer_Homepage_Gerichte.pdf"],
+  ["2017", "/fileadmin/user_upload/Dokumente/Kennzahlen/KENNZAHLEN_Stand_31122017_fuer_Homepage_Gerichte.pdf"],
+  ["2018", "/fileadmin/user_upload/Dokumente/Kennzahlen/KENNZAHLEN_Stand_31122018_fuer_Homepage_Gerichte.pdf"],
+  ["2019", "/fileadmin/user_upload/Dokumente/Kennzahlen/KENNZAHLEN_Stand_31122019_fuer_Homepage_Gerichte.pdf"],
+  ["2020", "/fileadmin/user_upload/Dokumente/Kennzahlen/KENNZAHLEN_Stand_31122020_fuer_Homepage_Gerichte.pdf"],
+  ["2021", "/fileadmin/user_upload/Dokumente/Kennzahlen/KENNZAHLEN_Stand_31122021_fuer_Homepage_Gerichte.pdf"],
+  ["2022", "/fileadmin/user_upload/Dokumente/Kennzahlen/KENNZAHLEN_Stand_31122022_fuer_Homepage_Gerichte.pdf"],
+  ["2023", "/fileadmin/user_upload/Dokumente/Kennzahlen/KENNZAHLEN_Stand_31122023_fuer_Homepage_Gerichte.pdf"],
+  ["2024", "/fileadmin/user_upload/Dokumente/Kennzahlen/KENNZAHLEN_Stand_31122024_fuer_Homepage_Gerichte.pdf"],
+];
+---
+
+<BaseLayout title="Resultate | Kühnel Rosenmüller & Kollegen">
+  <ContentShell heading="Resultate" activeInsolvency="resultate" showInsolvencyMenu rightImageSrc="/assets/krsh/konfr_4og4.jpg" rightImageAlt="Konferenzraum" rightImageWidth={215} rightImageHeight={215}>
+    <div class="frame frame-default frame-type-textmedia frame-layout-0">
+      <header><h1>Resultate unserer Insolvenzverwaltung</h1></header>
+      <p>Insolvenzverwalter stehen im Wettbewerb. KÜHNEL, ROSENMÜLLER &amp; KOLLEGEN hat daher frühzeitig die Zertifizierung nach DIN EN ISO 9001 betrieben. Wir gehen aber noch einen Schritt weiter und dokumentieren die Resultate unserer Insolvenzverwaltung.</p>
+      <p>Nach der letzten Erhebung des Statistischen Bundesamtes belief sich die bundesweite Durchschnittsquote aller Unternehmensinsolvenzen, welche bis zum 31. Dezember 2018 beendet wurden, auf nur 6,1 %. Unsere Durchschnittsquote in Unternehmensinsolvenzen war jeweils deutlich höher und belief sich im Durchschnitt der Jahre 2022 bis 2024 auf 13,74%. Weitere Details und Kennzahlen entnehmen Sie bitte nachstehendem:</p>
+      <ul>
+        {kennzahlen.map(([year, href]) => <li><a href={href}>Link zu den Kennzahlen bis 31.12.{year}</a></li>)}
+      </ul>
+    </div>
+  </ContentShell>
+</BaseLayout>

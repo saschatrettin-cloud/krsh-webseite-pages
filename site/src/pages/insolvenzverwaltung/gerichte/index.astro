@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ContentShell from "../../../components/ContentShell.astro";
+
+const berlinCharlottenburg = ["RA Christoph Rosenmüller", "RA Dr. Joachim Heitsch", "RA Jürgen Nullmeier", "RA Hartmut Schweigart", "RA Dirk Semmelmann", "RAin Geraldine Mocci"];
+const bezirksgerichte = [
+  "Amtsgericht Köpenick: RA Schweigart",
+  "Amtsgericht Lichtenberg: RA Nullmeier",
+  "Amtsgericht Mitte: RAe Nullmeier, Schweigart, Semmelmann",
+  "Amtsgericht Neukölln: RA Schweigart",
+  "Amtsgericht Pankow/Weißensee: RAe Nullmeier, Schweigart, Semmelmann",
+  "Amtsgericht Schöneberg: RAe Nullmeier, Schweigart, Semmelmann",
+  "Amtsgericht Spandau: RAe Nullmeier, Schweigart, Semmelmann",
+  "Amtsgericht Tempelhof-Kreuzberg: RAe Nullmeier, Schweigart, Semmelmann",
+  "Amtsgericht Wedding: RAe Nullmeier, Schweigart",
+];
+const weitereGerichte = [
+  "Amtsgericht Braunschweig: RA Dr. Heitsch",
+  "Amtsgericht Cottbus: RAe Dr. Heitsch, Semmelmann",
+  "Amtsgericht Dessau: RA Dr. Heitsch",
+  "Amtsgericht Eschwege: RA Dr. Heitsch",
+  "Amtsgericht Gifhorn: RA Dr. Heitsch",
+  "Amtsgericht Göttingen: RA Dr. Heitsch",
+  "Amtsgericht Goslar: RA Dr. Heitsch",
+  "Amtsgericht Halle: RA Rosenmüller, RAin Mocci",
+  "Amtsgericht Hameln: RA Dr. Heitsch",
+  "Amtsgericht Hannover: RA Dr. Heitsch, RA Semmelmann",
+  "Amtsgericht Hildesheim: RA Dr. Heitsch",
+  "Amtsgericht Kassel: RA Dr. Heitsch, RAin Mocci",
+  "Amtsgericht Leipzig: RA Dr. Heitsch",
+  "Amtsgericht Magdeburg: RA Dr. Heitsch",
+  "Amtsgericht Neubrandenburg: RA Semmelmann",
+  "Amtsgericht Neuruppin: RAe Dr. Heitsch, Semmelmann",
+  "Amtsgericht Potsdam: RAe Dr. Heitsch, Nullmeier",
+  "Amtsgericht Stendal: RAe Dr. Heitsch, Semmelmann",
+  "Amtsgericht Wolfsburg: RA Dr. Heitsch",
+];
+---
+
+<BaseLayout title="Gerichte | Kühnel Rosenmüller & Kollegen">
+  <ContentShell heading="Gerichte" activeInsolvency="gerichte" showInsolvencyMenu rightImageSrc="/assets/krsh/konfr_4og2.jpg" rightImageAlt="Konferenzraum" rightImageWidth={215} rightImageHeight={215}>
+    <p>Insolvenzverwaltung ist nicht zuletzt Vermögensverwaltung. Die Gerichte bestellen daher in erster Linie ihnen bekannte Personen zu Insolvenzverwaltern. Dem geht häufig ein regelrechtes Bewerbungsverfahren voran, da Insolvenzgerichte Vorauswahllisten führen, aus denen sie den geeigneten Insolvenzverwalter auswählen.</p>
+    <p>Unsere Insolvenzverwalter sind nach Durchlaufen solcher Auswahlverfahren bei den nachfolgenden Gerichten zugelassen:</p>
+    <h4>Berlin-Charlottenburg</h4>
+    <ul>{berlinCharlottenburg.map((item) => <li>{item}</li>)}</ul>
+    <h4>Berliner Bezirksgerichte</h4>
+    <ul>{bezirksgerichte.map((item) => <li>{item}</li>)}</ul>
+    <h4>Weitere Gerichte</h4>
+    <ul>{weitereGerichte.map((item) => <li>{item}</li>)}</ul>
+  </ContentShell>
+</BaseLayout>

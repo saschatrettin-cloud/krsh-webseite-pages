@@ -1,0 +1,624 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const nameOptions = [
+  {
+    title: "Kühnel Rosenmüller",
+    status: "Designerbasis",
+    text: "Alle neu gelieferten Logo-Optionen setzen diese reduzierte Wortmarke voraus.",
+    effect: "prägnant, kurz und typografisch klar",
+  },
+  {
+    title: "Kühnel, Rosenmüller & Kollegen",
+    status: "Bestandsname",
+    text: "Diese Namensform wahrt die bisherige Kanzleibezeichnung, ist in den neuen Logo-PDFs aber nicht visualisiert.",
+    effect: "höhere Kontinuität, zugleich längere Wortmarke",
+  },
+];
+
+const logoDirections = [
+  {
+    title: "Option 1: Würfel mit KK",
+    status: "historisch hergeleitet",
+    src: "/assets/logo-entscheidung/option-1-kk.jpg",
+    text: "Die KK-Bildmarke knüpft an die bisherige Kanzleihistorie an. Bei der reduzierten Wortmarke „Kühnel Rosenmüller“ bleibt die Initialenlogik jedoch erklärungsbedürftig.",
+  },
+  {
+    title: "Option 2: Würfel mit KR",
+    status: "logisch aus der Wortmarke",
+    src: "/assets/logo-entscheidung/option-2-kr-v1.jpg",
+    text: "Die KR-Bildmarke bildet die reduzierte Wortmarke unmittelbar ab und stellt zugleich einen Bezug zur bestehenden KRSH-Kennung her.",
+  },
+  {
+    title: "Option 3: reine Wortmarke",
+    status: "maximal reduziert",
+    src: "/assets/logo-entscheidung/option-3-wortmarke.jpg",
+    text: "Der Verzicht auf eine Bildmarke vermeidet die Initialenfrage vollständig und konzentriert die Marke auf den Kanzleinamen.",
+  },
+];
+
+const variants = [
+  {
+    title: "Option 1",
+    subtitle: "Würfel mit KK",
+    src: "/assets/logo-entscheidung/option-1-kk.jpg",
+    alt: "Logo-Option 1 mit KK-Bildmarke und Wortmarke Kühnel Rosenmüller",
+  },
+  {
+    title: "Option 2 v1",
+    subtitle: "Würfel mit KR, Variante 1",
+    src: "/assets/logo-entscheidung/option-2-kr-v1.jpg",
+    alt: "Logo-Option 2 Variante 1 mit KR-Bildmarke und Wortmarke Kühnel Rosenmüller",
+  },
+  {
+    title: "Option 2 v2",
+    subtitle: "Würfel mit KR, Variante 2",
+    src: "/assets/logo-entscheidung/option-2-kr-v2.jpg",
+    alt: "Logo-Option 2 Variante 2 mit KR-Bildmarke und Wortmarke Kühnel Rosenmüller",
+  },
+  {
+    title: "Option 2 v3",
+    subtitle: "Würfel mit KR, Variante 3",
+    src: "/assets/logo-entscheidung/option-2-kr-v3.jpg",
+    alt: "Logo-Option 2 Variante 3 mit KR-Bildmarke und Wortmarke Kühnel Rosenmüller",
+  },
+  {
+    title: "Option 3",
+    subtitle: "ohne Bildmarke",
+    src: "/assets/logo-entscheidung/option-3-wortmarke.jpg",
+    alt: "Logo-Option 3 als reine Wortmarke Kühnel Rosenmüller ohne Bildmarke",
+  },
+];
+
+const comparisonRows = [
+  {
+    criterion: "Wortmarke",
+    option1: "Kühnel Rosenmüller",
+    option2: "Kühnel Rosenmüller",
+    option3: "Kühnel Rosenmüller",
+  },
+  {
+    criterion: "Bildmarke",
+    option1: "KK-Würfel",
+    option2: "KR-Würfel in drei Ausprägungen",
+    option3: "keine Bildmarke",
+  },
+  {
+    criterion: "Herleitung",
+    option1: "historische Kontinuität",
+    option2: "logisch aus dem Namen",
+    option3: "bewusste Reduktion",
+  },
+  {
+    criterion: "Klärungsbedarf",
+    option1: "Warum KK bei Kühnel Rosenmüller?",
+    option2: "Welche KR-Ausprägung?",
+    option3: "Reicht die reine Wortmarke?",
+  },
+];
+---
+
+<BaseLayout
+  title="Logo-Entscheidung"
+  description="Interne Präsentationsseite zur Logo-Entscheidung der Sozienrunde am 2. Juni 2026."
+  noindex={true}
+  pageClass="logo-decision-page"
+>
+  <main class="logo-deck">
+    <section class="logo-hero" aria-labelledby="logo-title">
+      <p class="deck-kicker">Sozienrunde · 2. Juni 2026</p>
+      <h1 id="logo-title">Logo-Entscheidung</h1>
+      <p>
+        Die Entscheidung sollte in zwei Stufen erfolgen: zuerst der Name der Kanzlei,
+        danach die konkrete Logo-Richtung.
+      </p>
+      <ol class="decision-path" aria-label="Reihenfolge der Entscheidungen">
+        <li><span>1</span>Name der Kanzlei</li>
+        <li><span>2</span>Logo</li>
+      </ol>
+    </section>
+
+    <section class="deck-section" aria-labelledby="status-title">
+      <div class="section-heading">
+        <p class="deck-kicker">I. Ausgangspunkt</p>
+        <h2 id="status-title">Was aus dem Workshop maßgeblich ist</h2>
+      </div>
+      <div class="statement-grid">
+        <article>
+          <h3>Namensfrage zuerst</h3>
+          <p>
+            Nach dem Workshop-Dokument wurde der Kanzleiname im bisherigen Prozess
+            mehrfach reduziert. Die neuen Entwürfe gehen sämtlich von der Wortmarke
+            <strong>„Kühnel Rosenmüller“</strong> aus.
+          </p>
+        </article>
+        <article>
+          <h3>Logik der Bildmarke danach</h3>
+          <p>
+            Erst wenn die Wortmarke feststeht, lässt sich sachgerecht entscheiden,
+            ob eine <strong>KK-Bildmarke</strong>, eine <strong>KR-Bildmarke</strong>
+            oder <strong>keine Bildmarke</strong> maßgeblich sein soll.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="deck-section" aria-labelledby="name-title">
+      <div class="section-heading">
+        <p class="deck-kicker">II. Entscheidung 1</p>
+        <h2 id="name-title">Name der Kanzlei</h2>
+      </div>
+      <div class="option-grid option-grid--two">
+        {nameOptions.map((option) => (
+          <article class="option-card">
+            <p class="option-status">{option.status}</p>
+            <h3>{option.title}</h3>
+            <p>{option.text}</p>
+            <dl>
+              <div>
+                <dt>Wirkung</dt>
+                <dd>{option.effect}</dd>
+              </div>
+            </dl>
+          </article>
+        ))}
+      </div>
+      <div class="decision-note">
+        <h3>Beschlussbedarf</h3>
+        <p>
+          Maßgeblich ist, ob die reduzierte Namensform „Kühnel Rosenmüller“
+          verbindlich bestätigt wird oder ob der Zusatz „&amp; Kollegen“ weiterhin
+          Bestandteil der Wortmarke bleiben soll. Ohne diesen Beschluss bleibt die
+          Logoentscheidung insoweit vorgreiflich.
+        </p>
+      </div>
+    </section>
+
+    <section class="deck-section" aria-labelledby="logo-title-2">
+      <div class="section-heading">
+        <p class="deck-kicker">III. Entscheidung 2</p>
+        <h2 id="logo-title-2">Logo-Richtung</h2>
+      </div>
+      <div class="direction-grid">
+        {logoDirections.map((direction) => (
+          <article class="direction-card">
+            <img src={direction.src} width="1800" height="1012" alt={direction.title} loading="lazy" />
+            <div>
+              <p class="option-status">{direction.status}</p>
+              <h3>{direction.title}</h3>
+              <p>{direction.text}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="deck-section" aria-labelledby="variants-title">
+      <div class="section-heading">
+        <p class="deck-kicker">IV. Alle aktuellen Varianten</p>
+        <h2 id="variants-title">Die gelieferten Logo-Vorschläge</h2>
+      </div>
+      <div class="variant-list">
+        {variants.map((variant) => (
+          <article>
+            <div class="variant-label">
+              <span>{variant.title}</span>
+              <small>{variant.subtitle}</small>
+            </div>
+            <img src={variant.src} width="1800" height="1012" alt={variant.alt} loading="lazy" />
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="deck-section" aria-labelledby="comparison-title">
+      <div class="section-heading">
+        <p class="deck-kicker">V. Gegenüberstellung</p>
+        <h2 id="comparison-title">Option 1, Option 2 und Option 3 im Vergleich</h2>
+      </div>
+      <figure class="comparison-image">
+        <img
+          src="/assets/logo-entscheidung/optionen-vergleich.jpg"
+          width="2400"
+          height="1350"
+          alt="Gegenüberstellung der Logo-Optionen mit KK, KR und reiner Wortmarke"
+          loading="lazy"
+        />
+      </figure>
+      <div class="comparison-table" role="table" aria-label="Sachliche Gegenüberstellung der Logo-Optionen">
+        <div class="comparison-table__row comparison-table__row--head" role="row">
+          <span role="columnheader">Kriterium</span>
+          <span role="columnheader">Option 1</span>
+          <span role="columnheader">Option 2</span>
+          <span role="columnheader">Option 3</span>
+        </div>
+        {comparisonRows.map((row) => (
+          <div class="comparison-table__row" role="row">
+            <span role="cell">{row.criterion}</span>
+            <span role="cell">{row.option1}</span>
+            <span role="cell">{row.option2}</span>
+            <span role="cell">{row.option3}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="deck-section deck-section--closing" aria-labelledby="result-title">
+      <div class="section-heading">
+        <p class="deck-kicker">VI. Beschlussfragen</p>
+        <h2 id="result-title">Konkrete Reihenfolge für die Sozienrunde</h2>
+      </div>
+      <ol class="resolution-list">
+        <li>Welche Namensform soll künftig maßgeblich sein: „Kühnel Rosenmüller“ oder „Kühnel, Rosenmüller &amp; Kollegen“?</li>
+        <li>Wenn „Kühnel Rosenmüller“ beschlossen wird: Soll das Logo mit KK, mit KR oder ohne Bildmarke geführt werden?</li>
+        <li>Wenn KR beschlossen wird: Welche der drei KR-Ausprägungen soll die Agentur weiter ausarbeiten?</li>
+        <li>Wenn „&amp; Kollegen“ Bestandteil der Wortmarke bleiben soll: Soll die Agentur hierfür eine ergänzende Visualisierung erstellen?</li>
+      </ol>
+      <div class="recommendation">
+        <h3>Empfehlung zur Sitzungsführung</h3>
+        <p>
+          Vor diesem Hintergrund sollte die Runde zunächst die Namensfrage verbindlich
+          entscheiden. Erst danach ist die Logoauswahl sachgerecht möglich; bei einer
+          Entscheidung gegen die reduzierte Wortmarke wäre eine Nacharbeit der Agentur
+          erforderlich.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    :global(#page.logo-decision-page) {
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+      margin: 0;
+      background: #f5f7f8;
+      color: #1c252c;
+      box-shadow: none;
+    }
+
+    :global(.logo-decision-page .site-header),
+    :global(.logo-decision-page footer),
+    :global(#page.logo-decision-page ~ .staging-badge) {
+      display: none;
+    }
+
+    .logo-deck {
+      font-family: "Open Sans", Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    .logo-hero,
+    .deck-section {
+      min-height: 100vh;
+      padding: clamp(32px, 5vw, 72px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 28px;
+      border-bottom: 1px solid #d9e0e4;
+    }
+
+    .logo-hero {
+      background:
+        linear-gradient(110deg, rgba(0, 114, 174, 0.92), rgba(28, 37, 44, 0.88)),
+        url("/assets/krsh/konfr_4og.jpg") center / cover;
+      color: #fff;
+    }
+
+    .deck-kicker,
+    .option-status {
+      margin: 0;
+      color: #0072ae;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .logo-hero .deck-kicker {
+      color: #d8edf8;
+    }
+
+    .logo-hero h1,
+    .section-heading h2 {
+      margin: 0;
+      max-width: 980px;
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.08;
+    }
+
+    .logo-hero h1 {
+      color: #fff;
+      font-size: clamp(44px, 7vw, 92px);
+    }
+
+    .section-heading h2 {
+      color: #1c252c;
+      font-size: clamp(28px, 4vw, 54px);
+    }
+
+    .logo-hero > p {
+      margin: 0;
+      max-width: 860px;
+      color: #eef6fb;
+      font-size: clamp(18px, 2vw, 28px);
+    }
+
+    .decision-path {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 16px;
+      max-width: 820px;
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .decision-path li,
+    .statement-grid article,
+    .option-card,
+    .decision-note,
+    .direction-card,
+    .variant-list article,
+    .comparison-image,
+    .comparison-table,
+    .recommendation {
+      background: #fff;
+      border: 1px solid #d9e0e4;
+      border-radius: 8px;
+      box-shadow: 0 18px 40px rgba(28, 37, 44, 0.08);
+    }
+
+    .decision-path li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.32);
+      box-shadow: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .decision-path span {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff;
+      color: #0072ae;
+    }
+
+    .section-heading {
+      display: grid;
+      gap: 10px;
+    }
+
+    .statement-grid,
+    .option-grid,
+    .direction-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .statement-grid,
+    .option-grid--two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .statement-grid article,
+    .option-card,
+    .decision-note,
+    .recommendation {
+      padding: 26px;
+    }
+
+    .statement-grid h3,
+    .option-card h3,
+    .decision-note h3,
+    .direction-card h3,
+    .recommendation h3 {
+      margin: 0;
+      color: #1c252c;
+      letter-spacing: 0;
+      line-height: 1.2;
+    }
+
+    .statement-grid p,
+    .option-card p,
+    .decision-note p,
+    .direction-card p,
+    .recommendation p {
+      margin: 12px 0 0;
+      color: #3f4c54;
+    }
+
+    .option-card dl {
+      display: grid;
+      gap: 12px;
+      margin: 18px 0 0;
+    }
+
+    .option-card dt {
+      color: #0072ae;
+      font-weight: 700;
+    }
+
+    .option-card dd {
+      margin: 3px 0 0;
+      color: #3f4c54;
+    }
+
+    .decision-note,
+    .recommendation {
+      border-left: 6px solid #0072ae;
+    }
+
+    .direction-card {
+      overflow: hidden;
+    }
+
+    .direction-card img,
+    .variant-list img,
+    .comparison-image img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .direction-card div {
+      padding: 22px;
+    }
+
+    .variant-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .variant-list article {
+      display: grid;
+      grid-template-columns: minmax(180px, 260px) 1fr;
+      align-items: center;
+      gap: 24px;
+      padding: 22px;
+    }
+
+    .variant-label span {
+      display: block;
+      color: #0072ae;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .variant-label small {
+      display: block;
+      margin-top: 4px;
+      color: #52616a;
+      font-size: 14px;
+    }
+
+    .comparison-image {
+      overflow: hidden;
+      margin: 0;
+    }
+
+    .comparison-table {
+      display: grid;
+      overflow: hidden;
+    }
+
+    .comparison-table__row {
+      display: grid;
+      grid-template-columns: 1.1fr repeat(3, 1fr);
+      min-height: 58px;
+      border-bottom: 1px solid #e4eaee;
+    }
+
+    .comparison-table__row:last-child {
+      border-bottom: 0;
+    }
+
+    .comparison-table__row span {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      color: #3f4c54;
+      border-right: 1px solid #e4eaee;
+    }
+
+    .comparison-table__row span:last-child {
+      border-right: 0;
+    }
+
+    .comparison-table__row--head {
+      background: #1c252c;
+    }
+
+    .comparison-table__row--head span {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .deck-section--closing {
+      background: #eef3f6;
+    }
+
+    .resolution-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: resolution;
+    }
+
+    .resolution-list li {
+      position: relative;
+      min-height: 58px;
+      padding: 18px 22px 18px 70px;
+      background: #fff;
+      border: 1px solid #d9e0e4;
+      border-radius: 8px;
+      color: #26323a;
+      box-shadow: 0 12px 26px rgba(28, 37, 44, 0.06);
+      counter-increment: resolution;
+    }
+
+    .resolution-list li::before {
+      content: counter(resolution);
+      position: absolute;
+      top: 14px;
+      left: 20px;
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 50%;
+      background: #0072ae;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .recommendation {
+      border-left-color: #7c8b3a;
+    }
+
+    @media (max-width: 900px) {
+      .logo-hero,
+      .deck-section {
+        min-height: auto;
+        padding: 28px 18px;
+      }
+
+      .decision-path,
+      .statement-grid,
+      .option-grid,
+      .option-grid--two,
+      .direction-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .variant-list article,
+      .comparison-table__row {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-table__row span {
+        border-right: 0;
+        border-bottom: 1px solid #e4eaee;
+      }
+
+      .comparison-table__row span:last-child {
+        border-bottom: 0;
+      }
+    }
+  </style>
+</BaseLayout>

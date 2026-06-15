@@ -1,0 +1,211 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import RightColumn from "../../../components/RightColumn.astro";
+import { SITE } from "../../../config/site";
+import { lawyers } from "../../../data/lawyers";
+import { personSchema, breadcrumbSchema } from "../../../lib/schema";
+
+export function getStaticPaths() {
+  return lawyers.map((lawyer) => ({
+    params: { slug: lawyer.slug },
+    props: { lawyer },
+  }));
+}
+
+const { lawyer } = Astro.props;
+
+// Origin für Schema und Canonical
+const siteOrigin = (Astro.site ?? new URL(SITE.url)).origin;
+const displayName = lawyer.fullName ?? lawyer.title;
+
+// Breadcrumbs strukturieren die Pfade redaktionell und semantisch zugleich.
+const breadcrumbs = [
+  { name: "Startseite", url: "/" },
+  { name: "Anwälte / Notare", url: "/anwaelte-notare/anwaelte/" },
+  { name: displayName, url: `/anwaelte-notare/anwaelte/${lawyer.slug}/` },
+];
+
+const structuredData = [
+  personSchema(siteOrigin, lawyer),
+  breadcrumbSchema(siteOrigin, breadcrumbs),
+];
+
+const description =
+  lawyer.metaDescription ??
+  `${displayName} — ${lawyer.role ?? "Rechtsanwalt"} bei ${SITE.name}. ` +
+    (lawyer.specializations && lawyer.specializations.length > 0
+      ? `Schwerpunkte: ${lawyer.specializations.slice(0, 4).join(", ")}.`
+      : "");
+
+const seoTitle = lawyer.role
+  ? `${displayName} — ${lawyer.role.split(",")[0]}`
+  : displayName;
+
+const telSanitized = lawyer.telephone?.replace(/\s/g, "");
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={description}
+  ogImage={lawyer.photo}
+  structuredData={structuredData}
+>
+  <div id="content">
+    <div id="col1">
+      <div class="frame frame-default frame-type-header frame-layout-0">
+        <header>
+          <p class="section-label">Anwälte</p>
+        </header>
+      </div>
+    </div>
+
+    <div id="col2">
+      <nav class="breadcrumb" aria-label="Sie sind hier">
+        <ol>
+          {breadcrumbs.map((b, i) => (
+            <li>
+              {i < breadcrumbs.length - 1 ? (
+                <a href={b.url}>{b.name}</a>
+              ) : (
+                <span aria-current="page">{b.name}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+
+      <article class="lawyer-detail" itemscope itemtype="https://schema.org/Person">
+        <header class="lawyer-head">
+          <h1 itemprop="name">{displayName}</h1>
+          {lawyer.role && <p class="role" itemprop="jobTitle">{lawyer.role}</p>}
+        </header>
+
+        {lawyer.photo && (
+          <figure class="lawyer-photo">
+            <img
+              src={lawyer.photo}
+              alt={`Porträt ${displayName}`}
+              width="202"
+              height="280"
+              loading="lazy"
+              itemprop="image"
+            />
+          </figure>
+        )}
+
+        {lawyer.paragraphs && lawyer.paragraphs.length > 0 && (
+          <section class="lawyer-intro" itemprop="description">
+            {lawyer.paragraphs.map((p) => <p>{p}</p>)}
+          </section>
+        )}
+
+        {lawyer.qualifications && lawyer.qualifications.length > 0 && (
+          <section class="lawyer-block">
+            <h2>Qualifikationen</h2>
+            <ul>
+              {lawyer.qualifications.map((q) => <li>{q}</li>)}
+            </ul>
+          </section>
+        )}
+
+        {lawyer.specializations && lawyer.specializations.length > 0 && (
+          <section class="lawyer-block">
+            <h2>Tätigkeitsschwerpunkte</h2>
+            <ul>
+              {lawyer.specializations.map((s) => (
+                <li itemprop="knowsAbout">{s}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {lawyer.cv && lawyer.cv.length > 0 && (
+          <section class="lawyer-block">
+            <h2>Beruflicher Werdegang</h2>
+            <ul class="cv-list">
+              {lawyer.cv.map((entry) => <li>{entry}</li>)}
+            </ul>
+          </section>
+        )}
+
+        {lawyer.memberships && lawyer.memberships.length > 0 && (
+          <section class="lawyer-block">
+            <h2>Mitgliedschaften</h2>
+            <ul>
+              {lawyer.memberships.map((m) => (
+                <li itemprop="memberOf">{m}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {(telSanitized || lawyer.email || lawyer.xing || lawyer.linkedin) && (
+          <section class="lawyer-block lawyer-contact">
+            <h2>Kontakt und Profile</h2>
+            <ul class="contact-list">
+              {telSanitized && (
+                <li>
+                  Telefon:
+                  <a href={`tel:${telSanitized}`} itemprop="telephone">
+                    {lawyer.telephone}
+                  </a>
+                </li>
+              )}
+              {lawyer.email && (
+                <li>
+                  E-Mail:
+                  <a href={`mailto:${lawyer.email}`} itemprop="email">
+                    {lawyer.email}
+                  </a>
+                </li>
+              )}
+              {lawyer.xing && (
+                <li>
+                  <a
+                    href={lawyer.xing}
+                    rel="me noopener"
+                    target="_blank"
+                    itemprop="sameAs"
+                  >
+                    Xing-Profil
+                  </a>
+                </li>
+              )}
+              {lawyer.linkedin && (
+                <li>
+                  <a
+                    href={lawyer.linkedin}
+                    rel="me noopener"
+                    target="_blank"
+                    itemprop="sameAs"
+                  >
+                    LinkedIn-Profil
+                  </a>
+                </li>
+              )}
+            </ul>
+          </section>
+        )}
+
+        <p class="back-link">
+          <a href="/anwaelte-notare/anwaelte/">← Zur Übersicht aller Anwältinnen und Anwälte</a>
+        </p>
+      </article>
+    </div>
+
+    <RightColumn
+      activeLawyers="anwaelte"
+      showLawyersMenu
+    />
+
+    <footer>
+      <div class="clear"></div>
+      <div id="foot">
+        <div class="foottext">
+          Rechtsanwälte · Notare · Insolvenzverwalter<br />
+          Fachanwälte für Insolvenzrecht, Arbeitsrecht, Miet- und Wohnungseigentumsrecht
+        </div>
+      </div>
+    </footer>
+  </div>
+</BaseLayout>

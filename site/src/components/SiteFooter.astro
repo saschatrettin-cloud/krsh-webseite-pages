@@ -1,0 +1,68 @@
+---
+import { SITE } from "../config/site";
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <section class="site-footer__profile" aria-labelledby="footer-profile">
+      <h2 id="footer-profile">Kühnel, Rosenmüller &amp; Kollegen</h2>
+      <p>
+        Rechtsanwälte, Notare und Insolvenzverwalter mit Schwerpunkten in
+        Insolvenzverwaltung, Sanierung, Wirtschaftsrecht und notarieller
+        Beratung.
+      </p>
+      <p class="site-footer__claim">
+        Fachanwälte für Insolvenzrecht, Arbeitsrecht, Miet- und
+        Wohnungseigentumsrecht
+      </p>
+    </section>
+
+    <nav class="site-footer__nav" aria-label="Leistungen">
+      <h2>Leistungen</h2>
+      <ul>
+        <li><a href="/insolvenzverwaltung/insolvenzverwalter/">Insolvenzverwaltung</a></li>
+        <li><a href="/sanierung/">Sanierung</a></li>
+        <li><a href="/starug/">StaRUG</a></li>
+        <li><a href="/schutzschirm-eigenverwaltung/">Schutzschirm / Eigenverwaltung</a></li>
+      </ul>
+    </nav>
+
+    <nav class="site-footer__nav" aria-label="Service">
+      <h2>Service</h2>
+      <ul>
+        <li><a href="/insolvenzverwaltung/insolvenzverfahren/">Insolvenzverfahren</a></li>
+        <li><a href="/insolvenzverwaltung/informationen/">Informationen</a></li>
+        <li><a href="https://www.glaeubigerinformation.de/t/191/proceeding-search" target="_blank" rel="noopener">GIS</a></li>
+        <li><a href="/kontakt/">Kontakt</a></li>
+      </ul>
+    </nav>
+
+    <address class="site-footer__contact">
+      <h2>Standorte</h2>
+      <ul>
+        {SITE.locations.map((location) => (
+          <li>
+            <a href={`/standorte/${location.id}/`}>
+              {location.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p>
+        <a href={`mailto:${SITE.contact.email}`}>{SITE.contact.email}</a><br />
+        <a href={`tel:${SITE.contact.telephone.replace(/[^+\d]/g, "")}`}>
+          {SITE.contact.telephone}
+        </a>
+      </p>
+    </address>
+  </div>
+
+  <div class="site-footer__legal">
+    <span>© 2026 {SITE.name}</span>
+    <nav aria-label="Rechtliches">
+      <a href="/service/sitemap/">Sitemap</a>
+      <a href="/service/datenschutz/">Datenschutz</a>
+      <a href="/service/impressum/">Impressum</a>
+    </nav>
+  </div>
+</footer>

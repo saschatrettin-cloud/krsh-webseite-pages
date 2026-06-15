@@ -1,0 +1,17 @@
+{
+  "name": "krsh-webseite-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ./node_modules/astro/bin/astro.mjs dev",
+    "build": "node ./node_modules/astro/bin/astro.mjs build",
+    "build:publish-root": "node ./node_modules/astro/bin/astro.mjs build && node ./scripts/publish-root.mjs",
+    "preview": "node ./node_modules/astro/bin/astro.mjs preview",
+    "astro": "node ./node_modules/astro/bin/astro.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "astro": "^6.3.7"
+  }
+}

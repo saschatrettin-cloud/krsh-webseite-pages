@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ContentShell from "../../../components/ContentShell.astro";
+import { insolvencyProceedings } from "../../../data/insolvencyProceedings";
+import { SITE } from "../../../config/site";
+import { breadcrumbSchema } from "../../../lib/schema";
+
+export function getStaticPaths() {
+  return insolvencyProceedings
+    .filter((item) => item.active)
+    .map((item) => ({
+      params: { slug: item.slug },
+      props: { item },
+    }));
+}
+
+const { item } = Astro.props;
+const siteOrigin = (Astro.site ?? new URL(SITE.url)).origin;
+const pageUrl = `${siteOrigin}/insolvenzverwaltung/insolvenzverfahren/${item.slug}/`;
+const description = item.teaser.replace(/\.\.\.$/, ".");
+const displayDate = new Intl.DateTimeFormat("de-DE", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+}).format(new Date(`${item.date}T00:00:00`));
+
+const structuredData = [
+  breadcrumbSchema(siteOrigin, [
+    { name: "Startseite", url: "/" },
+    { name: "Insolvenzverfahren", url: "/insolvenzverwaltung/insolvenzverfahren/" },
+    { name: item.title, url: `/insolvenzverwaltung/insolvenzverfahren/${item.slug}/` },
+  ]),
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: item.title,
+    description,
+    datePublished: item.date,
+    dateModified: item.date,
+    author: { "@type": "Person", name: item.author },
+    publisher: { "@id": `${siteOrigin}/#organization` },
+    mainEntityOfPage: pageUrl,
+  },
+];
+---
+
+<BaseLayout
+  title={item.title}
+  description={description}
+  structuredData={structuredData}
+>
+  <ContentShell heading="Insolvenzverfahren" activeInsolvency="insolvenzverfahren" showInsolvencyMenu rightImageSrc="/assets/krsh/bruecke.jpg" rightImageAlt="Brücke" rightImageWidth={215} rightImageHeight={215}>
+    <article class="news-single proceeding-detail">
+      <header class="proceeding-detail__header">
+        <p class="eyebrow">Verfahrensmitteilung</p>
+        <h2>{item.title}</h2>
+        <p class="footer">
+          <time datetime={item.date}>{displayDate}</time>
+          <span>{item.category}</span>
+          <span>erstellt von {item.author}</span>
+        </p>
+      </header>
+
+      <section class="proceeding-detail__summary" aria-labelledby="summary-title">
+        <h3 id="summary-title">Zusammenfassung</h3>
+        <p>{description}</p>
+      </section>
+
+      <section aria-labelledby="notice-title">
+        <h3 id="notice-title">Verfahrensmitteilung</h3>
+        {item.body.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+
+      <section class="proceeding-detail__links" aria-labelledby="creditor-title">
+        <h3 id="creditor-title">Hinweise für Gläubiger und Verfahrensbeteiligte</h3>
+        <p>
+          Weitere Informationen zur Forderungsanmeldung und zu Unterlagen für
+          Insolvenzgläubiger finden Sie im Informationsbereich der Kanzlei.
+        </p>
+        <div class="procedure-topic-links procedure-topic-links--compact">
+          <a href="https://www.glaeubigerinformation.de/t/191/proceeding-search" target="_blank" rel="noopener">
+            <span>GIS öffnen</span>
+            <small>Gläubigerinformation</small>
+          </a>
+          <a href="/insolvenzverwaltung/informationen/">
+            <span>Informationen</span>
+            <small>Formulare und Merkblätter</small>
+          </a>
+          <a href="/insolvenzverwaltung/insolvenzverfahren/">
+            <span>Weitere Verfahren</span>
+            <small>Übersicht</small>
+          </a>
+        </div>
+      </section>
+
+      <p class="back-link"><a href="/insolvenzverwaltung/insolvenzverfahren/">Zurück zu den Insolvenzverfahren</a></p>
+    </article>
+  </ContentShell>
+</BaseLayout>

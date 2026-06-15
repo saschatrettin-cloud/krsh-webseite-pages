@@ -1,0 +1,160 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import RightColumn from "../../components/RightColumn.astro";
+import { SITE } from "../../config/site";
+import { localBusinessSchema, breadcrumbSchema } from "../../lib/schema";
+
+export function getStaticPaths() {
+  return SITE.locations.map((location) => ({
+    params: { slug: location.id },
+    props: { location },
+  }));
+}
+
+const { location } = Astro.props;
+const siteOrigin = (Astro.site ?? new URL(SITE.url)).origin;
+const fullAddress = `${location.streetAddress}, ${location.postalCode} ${location.addressLocality}`;
+const telDisplay = location.telephone ?? SITE.contact.telephone;
+const telLink = telDisplay.replace(/[^+\d]/g, "");
+
+const breadcrumbs = [
+  { name: "Startseite", url: "/" },
+  { name: "Standorte", url: "/standorte/" },
+  { name: location.name, url: `/standorte/${location.id}/` },
+];
+
+// Nur die Rechtsgebiete verlinken, für die im Astro-Repo bereits eine
+// eigene Seite existiert. Die übrigen werden nach dem Schwerpunkte-
+// Rollout nachverlinkt.
+const practiceAreaLinks: Record<string, string> = {
+  insolvenzverwaltung: "/insolvenzverwaltung/insolvenzverwalter/",
+  sanierung: "/sanierung/",
+  starug: "/starug/",
+  "schutzschirm-eigenverwaltung": "/schutzschirm-eigenverwaltung/",
+};
+
+const structuredData = [
+  localBusinessSchema(siteOrigin, location),
+  breadcrumbSchema(siteOrigin, breadcrumbs),
+];
+
+const branchLabel = location.isMainBranch ? "Hauptsitz" : "Niederlassung";
+const description =
+  `Kühnel, Rosenmüller & Kollegen — ${branchLabel} in ${location.addressLocality}: ${fullAddress}. ` +
+  `Schwerpunkte: Insolvenzverwaltung, Sanierung, Wirtschafts- und Arbeitsrecht.`;
+---
+
+<BaseLayout
+  title={`Standort ${location.name}`}
+  description={description}
+  structuredData={structuredData}
+>
+  <div id="content">
+    <div id="col1">
+      <div class="frame frame-default frame-type-header frame-layout-0">
+        <header>
+          <p class="section-label">Standorte</p>
+        </header>
+      </div>
+    </div>
+
+    <div id="col2">
+      <nav class="breadcrumb" aria-label="Sie sind hier">
+        <ol>
+          {breadcrumbs.map((b, i) => (
+            <li>
+              {i < breadcrumbs.length - 1 ? (
+                <a href={b.url}>{b.name}</a>
+              ) : (
+                <span aria-current="page">{b.name}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+
+      <article class="location-detail" itemscope itemtype="https://schema.org/LegalService">
+        <header class="location-head">
+          <h1>{SITE.shortName} in {location.name}</h1>
+          <p class="role">{branchLabel}</p>
+        </header>
+
+        <section class="location-intro">
+          <p>
+            Die Kanzlei Kühnel, Rosenmüller & Kollegen ist {location.isMainBranch ? "seit ihrer Gründung im Jahr 1975 mit dem Hauptsitz" : "mit einer Niederlassung"} in {location.addressLocality} präsent.
+            Wir beraten und vertreten von hier aus Mandantinnen und Mandanten
+            insbesondere in den Bereichen Insolvenzverwaltung, Sanierung,
+            Arbeits-, Gesellschafts- und Immobilienrecht.
+          </p>
+        </section>
+
+        <section class="lawyer-block">
+          <h2>Anschrift und Kontakt</h2>
+          <address
+            itemprop="address"
+            itemscope
+            itemtype="https://schema.org/PostalAddress"
+          >
+            <p>
+              <strong>{SITE.legalName}</strong><br />
+              <span itemprop="streetAddress">{location.streetAddress}</span><br />
+              <span itemprop="postalCode">{location.postalCode}</span>
+              <span itemprop="addressLocality">{location.addressLocality}</span>
+            </p>
+          </address>
+          <ul class="contact-list">
+            <li>
+              Telefon:
+              <a href={`tel:${telLink}`} itemprop="telephone">{telDisplay}</a>
+            </li>
+            {location.email && (
+              <li>
+                E-Mail:
+                <a href={`mailto:${location.email}`} itemprop="email">
+                  {location.email}
+                </a>
+              </li>
+            )}
+            {!location.email && (
+              <li>
+                E-Mail:
+                <a href={`mailto:${SITE.contact.email}`}>{SITE.contact.email}</a>
+              </li>
+            )}
+          </ul>
+        </section>
+
+        <section class="lawyer-block">
+          <h2>Tätigkeitsschwerpunkte</h2>
+          <ul>
+            {SITE.practiceAreas.map((area) => (
+              <li>
+                {practiceAreaLinks[area.slug] ? (
+                  <a href={practiceAreaLinks[area.slug]}>{area.name}</a>
+                ) : (
+                  area.name
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <p class="back-link">
+          <a href="/standorte/">← Alle Standorte im Überblick</a>
+        </p>
+      </article>
+    </div>
+
+    <RightColumn />
+
+    <footer>
+      <div class="clear"></div>
+      <div id="foot">
+        <div class="foottext">
+          Rechtsanwälte · Notare · Insolvenzverwalter<br />
+          Fachanwälte für Insolvenzrecht, Arbeitsrecht, Miet- und Wohnungseigentumsrecht
+        </div>
+      </div>
+    </footer>
+  </div>
+</BaseLayout>

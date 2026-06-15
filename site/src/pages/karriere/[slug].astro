@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContentShell from "../../components/ContentShell.astro";
+import { jobs } from "../../data/jobs";
+
+export function getStaticPaths() {
+  return jobs
+    .filter((job) => job.active)
+    .map((job) => ({
+      params: { slug: job.slug },
+      props: { job },
+    }));
+}
+
+const { job } = Astro.props;
+---
+
+<BaseLayout title={`${job.title} | Kühnel Rosenmüller & Kollegen`}>
+  <ContentShell heading="Karriere">
+    <div class="frame frame-default frame-type-textmedia frame-layout-0 job-detail">
+      <header>
+        <h2>{job.title}</h2>
+        {(job.location || job.employment || job.start) && (
+          <h3>Standort: {job.location} | Anstellung: {job.employment} | Start: {job.start}</h3>
+        )}
+      </header>
+      {job.details.map((paragraph) => <p>{paragraph}</p>)}
+      <p>
+        <a class="application-link" href={`mailto:personalabteilung@krsh.de?subject=${encodeURIComponent(job.keyword)}`}>
+          Jetzt bewerben
+        </a>
+      </p>
+    </div>
+  </ContentShell>
+</BaseLayout>

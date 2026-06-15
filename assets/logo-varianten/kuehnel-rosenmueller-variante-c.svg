@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="154" viewBox="0 0 640 154" role="img" aria-labelledby="title desc">
+  <title id="title">Kuehnel Rosenmueller Logo Variante C</title>
+  <desc id="desc">Reduziertes Doppel-K-Monogramm mit staerkerer Hierarchie zwischen abstraktem linken und dominantem rechten K.</desc>
+  <rect width="640" height="154" fill="#ffffff"/>
+  <g transform="translate(8 8)">
+    <rect width="138" height="138" fill="#0072ae"/>
+    <path fill="#ffffff" d="M0 57 L37 18 H52 L19 62 L52 120 H37 L0 81 Z"/>
+    <path fill="#0072ae" d="M18 65 L38 66 L38 72 L18 73 L10 69 Z"/>
+    <rect x="66" y="18" width="18" height="102" fill="#ffffff"/>
+    <path fill="#ffffff" d="M84 62 L115 18 H134 L100 68 Z"/>
+    <path fill="#ffffff" d="M84 76 L100 70 L134 120 H115 Z"/>
+  </g>
+  <g fill="#0072ae" font-family="Montserrat, Avenir Next, Arial, Helvetica, sans-serif" font-weight="600" letter-spacing="2.8">
+    <text x="185" y="65" font-size="40">KÜHNEL</text>
+    <text x="185" y="123" font-size="40">ROSENMÜLLER</text>
+  </g>
+</svg>

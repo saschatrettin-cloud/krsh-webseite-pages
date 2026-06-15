@@ -1,0 +1,104 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ContentShell from "../../../components/ContentShell.astro";
+import { activeInsolvencyProceedings } from "../../../data/insolvencyProceedings";
+import { SITE } from "../../../config/site";
+import { breadcrumbSchema } from "../../../lib/schema";
+
+const siteOrigin = (Astro.site ?? new URL(SITE.url)).origin;
+const pageUrl = `${siteOrigin}/insolvenzverwaltung/insolvenzverfahren/`;
+const pageDescription =
+  "Aktuelle Insolvenzverfahren der Kanzlei Kühnel Rosenmüller & Kollegen mit Verfahrensmitteilungen, GIS-Zugang und Informationen für Gläubiger.";
+
+const dateFormatter = new Intl.DateTimeFormat("de-DE", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+const structuredData = [
+  breadcrumbSchema(siteOrigin, [
+    { name: "Startseite", url: "/" },
+    { name: "Insolvenzverwaltung", url: "/insolvenzverwaltung/insolvenzverwalter/" },
+    { name: "Insolvenzverfahren", url: "/insolvenzverwaltung/insolvenzverfahren/" },
+  ]),
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Aktuelle Insolvenzverfahren",
+    description: pageDescription,
+    url: pageUrl,
+    hasPart: activeInsolvencyProceedings.map((item) => ({
+      "@type": "Article",
+      headline: item.title,
+      datePublished: item.date,
+      author: { "@type": "Person", name: item.author },
+      url: `${siteOrigin}/insolvenzverwaltung/insolvenzverfahren/${item.slug}/`,
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title="Aktuelle Insolvenzverfahren"
+  description={pageDescription}
+  structuredData={structuredData}
+>
+  <ContentShell heading="Insolvenzverfahren" activeInsolvency="insolvenzverfahren" showInsolvencyMenu rightImageSrc="/assets/krsh/bruecke.jpg" rightImageAlt="Brücke" rightImageWidth={215} rightImageHeight={215}>
+    <div class="news-list-view proceeding-index">
+      <header class="proceeding-index__intro">
+        <p class="eyebrow">Verfahrensmitteilungen</p>
+        <h2>Aktuelle Insolvenzverfahren</h2>
+        <p>
+          Hier finden Verfahrensbeteiligte, Gläubiger und sonstige Interessierte
+          aktuelle Mitteilungen zu Insolvenzverfahren, vorläufigen
+          Insolvenzverfahren und den jeweils veröffentlichten Verfahrensseiten.
+        </p>
+      </header>
+
+      <nav class="procedure-topic-links" aria-label="Themen rund um Insolvenzverfahren">
+        <a href="https://www.glaeubigerinformation.de/t/191/proceeding-search" target="_blank" rel="noopener">
+          <span>GIS Gläubigerinformation</span>
+          <small>externer Zugang</small>
+        </a>
+        <a href="/insolvenzverwaltung/informationen/">
+          <span>Informationen für Gläubiger</span>
+          <small>Formulare und Merkblätter</small>
+        </a>
+        <a href="/insolvenzverwaltung/insolvenzverwalter/">
+          <span>Insolvenzverwaltung</span>
+          <small>Leistung der Kanzlei</small>
+        </a>
+      </nav>
+
+      <p class="proceeding-index__count">
+        {activeInsolvencyProceedings.length} veröffentlichte Verfahren
+      </p>
+
+      <ol class="proceeding-article-list">
+        {activeInsolvencyProceedings.map((item) => (
+          <li>
+            <article>
+              <a
+                class="news-list-card proceeding-article-card"
+                href={`/insolvenzverwaltung/insolvenzverfahren/${item.slug}/`}
+                aria-label={`Insolvenzverfahren öffnen: ${item.title}`}
+              >
+                <div class="proceeding-meta">
+                  <time datetime={item.date}>
+                    {dateFormatter.format(new Date(`${item.date}T00:00:00`))}
+                  </time>
+                  <span>{item.category}</span>
+                  <span>{item.author}</span>
+                </div>
+                <h3>{item.title}</h3>
+                <p>{item.teaser}</p>
+                <span class="card-action">Zum Verfahren</span>
+              </a>
+            </article>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </ContentShell>
+</BaseLayout>
