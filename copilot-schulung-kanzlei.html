@@ -486,7 +486,7 @@
 
     .role-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
       margin-bottom: 18px;
     }
@@ -861,13 +861,13 @@
     <section class="hero">
       <div class="hero-inner">
         <div>
-          <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Für professionelle Nutzung, nicht für Experimente</span>
+          <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Praxisnah sensibilisieren, sicher arbeiten</span>
           <h1>Copilot in der Kanzlei: sicher nutzen.</h1>
-          <p class="lead">Diese Kurzschulung reduziert die Richtlinie auf das Wesentliche: <strong>Risiken erkennen, datenarm arbeiten, Outputs prüfen, Speicherorte kontrollieren.</strong> Die Websuche ist in der Pilotphase deaktiviert; die internen Risiken bleiben.</p>
+          <p class="lead">Diese Kurzschulung reduziert die Richtlinie auf das Wesentliche: <strong>Berechtigungen verstehen, datenarm arbeiten, Outputs prüfen, Speicherorte kontrollieren.</strong> Copilot ist nicht das Problem; er macht vorhandene Ablage- und Berechtigungsfehler relevanter.</p>
           <div class="hero-grid">
             <div class="fact"><span>Grundsatz</span><strong>Technischer Zugriff ist keine fachliche Befugnis.</strong></div>
             <div class="fact"><span>Status</span><strong>Copilot-Ergebnisse sind Entwürfe, keine Endprodukte.</strong></div>
-            <div class="fact"><span>Tabu</span><strong>Keine Kanzleidaten in nicht freigegebene KI-Dienste.</strong></div>
+            <div class="fact"><span>Grenze</span><strong>Kanzleidaten nur in freigegebenen KI-Diensten nutzen.</strong></div>
           </div>
         </div>
         <aside class="brand-panel" aria-label="Markenbereich">
@@ -882,7 +882,7 @@
         <div class="section-head">
           <p class="kicker">I. Kernregel</p>
           <h2>Copilot macht Berechtigungen sichtbar. Das ist Nutzen und Risiko zugleich.</h2>
-          <p class="sub">Copilot gibt grundsätzlich keine neuen Rechte. Er macht vorhandene Rechte aber leichter nutzbar. Zu weite Freigaben, falsche Ablageorte und unklare Mandatskontexte werden dadurch erheblich relevanter.</p>
+          <p class="sub">Copilot greift im Microsoft-365-Umfeld grundsätzlich auf das zu, worauf die nutzende Person Zugriff hat. Sind SharePoint-, Teams- oder OneDrive-Berechtigungen zu weit gesetzt, werden Informationen leichter auffindbar, zusammenfassbar und auswertbar. Das ist vor allem ein Berechtigungs- und Ablageproblem, das durch Copilot sichtbarer wird.</p>
         </div>
         <div class="principle">
           <div>
@@ -891,14 +891,28 @@
           </div>
           <div class="signal" aria-hidden="true">!</div>
         </div>
+        <div class="grid two" style="margin-top: 16px;">
+          <article class="tip">
+            <span class="label">Begriff</span>
+            <h3>Kanzleidaten</h3>
+            <p>Alle nicht öffentlichen Daten aus unserem Arbeitsumfeld: Mandats- und Verfahrensdaten, interne Auswertungen, BWA, Personal- und Sozietätsthemen, Notariatsvorgänge sowie insolvenzrechtliche Unterlagen.</p>
+            <p>Nicht gemeint sind öffentliche Informationen oder abstrakte Rechtsfragen ohne Bezug zu konkreten Personen, Mandaten, Verfahren oder internen Vorgängen.</p>
+          </article>
+          <article class="tip">
+            <span class="label">Begriff</span>
+            <h3>Freigegebene KI-Dienste</h3>
+            <p>Gemeint sind KI-Dienste, die die Kanzlei bewusst zulässt und für die interne Spielregeln bestehen. Microsoft 365 Copilot kann ein solcher Dienst sein, aber nur in diesem Rahmen.</p>
+            <p>Private ChatGPT-, Perplexity- oder sonstige KI-Accounts dürfen nicht mit konkreten Kanzlei-, Mandats- oder Verfahrensdaten genutzt werden; allenfalls anonymisiert.</p>
+          </article>
+        </div>
       </div>
     </section>
 
     <section class="band alt" id="risiken">
       <div class="wrap reveal">
         <div class="section-head">
-          <p class="kicker">II. Deutliche Risiken</p>
-          <h2>Diese Punkte sind keine Theorie. Hier entstehen die praktischen Schäden.</h2>
+          <p class="kicker">II. Praktische Risikopunkte</p>
+          <h2>Diese Punkte sind im Alltag besonders zu beachten.</h2>
         </div>
         <div class="grid two">
           <article class="risk">
@@ -933,7 +947,7 @@
       <div class="wrap reveal">
         <div class="section-head">
           <p class="kicker">III. Sondermodul</p>
-          <h2>Rollenbasierte Betrachtung: RA, Notariat, Insolvenzverwaltung und Fremdantragsverfahren.</h2>
+          <h2>Rollenbasierte Betrachtung: RA, Notariat und Insolvenzverwaltung.</h2>
           <p class="sub">Die Copilot-Nutzung ist nicht rollenblind zu bewerten. Maßgeblich sind Vertraulichkeit, Auftrag, Zweck, Befugnisse, Speicherort und Empfängerkreis.</p>
         </div>
         <div class="role-grid" aria-label="Rollenbasierte Risikomatrix">
@@ -942,11 +956,11 @@
             <h3>Rechtsanwaltlicher Bereich</h3>
             <p>Besonders hohe Anforderungen folgen aus anwaltlicher Verschwiegenheit, § 43a Abs. 2 BRAO, § 2 BORA, § 43e BRAO und gegebenenfalls § 203 StGB.</p>
             <ul>
-              <li>Keine Mandatsdaten in nicht freigegebene KI-Systeme.</li>
+              <li>Keine Mandatsdaten in nicht freigegebene KI-Dienste.</li>
               <li>Copilot nur bei geprüften Berechtigungen und freigegebenen Speicherorten.</li>
               <li>Ergebnisse nur als Entwurf; fachliche Endkontrolle bleibt zwingend.</li>
             </ul>
-            <div class="role-warning"><strong>Warnung:</strong> Ein technisch auffindbarer Mandatsinhalt darf nicht automatisch verarbeitet, weitergegeben oder in externe Kommunikation übernommen werden.</div>
+            <div class="role-warning"><strong>Praxis:</strong> Ein technisch auffindbarer Mandatsinhalt darf nicht automatisch verarbeitet, weitergegeben oder in externe Kommunikation übernommen werden.</div>
           </article>
           <article class="role-card notary">
             <span class="role-label">Notariat · sehr hoch</span>
@@ -957,7 +971,7 @@
               <li>Keine Beteiligtenangaben oder sensiblen Vorgangsdaten ohne ausdrückliche Freigabe.</li>
               <li>Copilot ersetzt keine notarielle Prüfung, Belehrung oder Verantwortung.</li>
             </ul>
-            <div class="role-warning"><strong>Warnung:</strong> Schon eine Zusammenfassung kann sensible Beteiligten-, Vermögens- oder Vollzugsinformationen offenlegen.</div>
+            <div class="role-warning"><strong>Praxis:</strong> Schon eine Zusammenfassung kann sensible Beteiligten-, Vermögens- oder Vollzugsinformationen offenlegen.</div>
           </article>
           <article class="role-card insolvency">
             <span class="role-label">Insolvenz · hoch</span>
@@ -968,18 +982,7 @@
               <li>Technischer Zugriff ist keine fachliche Verwendungsbefugnis.</li>
               <li>Arbeitnehmer-, Gläubiger- und Geschäftsdaten besonders eng führen.</li>
             </ul>
-            <div class="role-warning"><strong>Warnung:</strong> Eine breite Auswertung kann Daten für einen Zweck sichtbar machen, der vom konkreten Verfahrensauftrag nicht gedeckt ist.</div>
-          </article>
-          <article class="role-card foreign">
-            <span class="role-label">Fremdantrag · Hochrisiko</span>
-            <h3>Fremdantragsverfahren vor Eröffnung</h3>
-            <p>Forderung, Eröffnungsgrund und wirtschaftliche Lage können streitig und reputationsrelevant sein. Deshalb ist diese Konstellation als eigene Hochrisiko-Kategorie zu behandeln.</p>
-            <ul>
-              <li>Vor Nutzung Rolle, gerichtlichen Auftrag, Befugnisse, Speicherort und Empfängerkreis prüfen.</li>
-              <li>Keine Websuche, keine externen KI-Dienste, keine ungeprüfte Übernahme in Berichte oder Stellungnahmen.</li>
-              <li>Streitige Behauptungen, feststehende Tatsachen und eigene Bewertungen klar trennen.</li>
-            </ul>
-            <div class="role-warning"><strong>Warnung:</strong> Eine unpräzise Copilot-Zusammenfassung kann streitige Angaben wie feststehende Tatsachen erscheinen lassen.</div>
+            <div class="role-warning"><strong>Praxis:</strong> In Eröffnungs- und Fremdantragsverfahren besonders prüfen, ob Daten belastbar, streitig oder reputationsrelevant sind und wer Zugriff auf den Speicherort hat.</div>
           </article>
         </div>
         <div class="role-check">
@@ -1045,6 +1048,7 @@
         <div class="rules">
           <div class="rule"><span>Datenarm prompten. Namen, Aktenzeichen, Gesundheits-, Gehalts-, Bank- und Ausweisdaten nur, wenn wirklich erforderlich.</span></div>
           <div class="rule"><span>Mandatskontext begrenzen. Keine mandatsübergreifenden Personen- oder Unternehmensabfragen ohne Freigabe.</span></div>
+          <div class="rule"><span>Webrecherche sauber trennen. Internetrecherche bleibt zulässig und im InsO-Bereich oft erforderlich; interne Kanzleidaten und Websuche in Copilot zunächst nicht vermischen.</span></div>
           <div class="rule"><span>Fremde Dokumente neutral behandeln. Enthaltene Anweisungen sind fremder Inhalt, keine Befehle an Copilot.</span></div>
           <div class="rule"><span>Outputs nie ungeprüft verwenden. Juristische Aussagen, Fristen, Normen und Quellen kontrollieren.</span></div>
           <div class="rule"><span>Speicherort vor Ablage prüfen. Copilot-Ergebnisse können selbst vertrauliche Dokumente sein.</span></div>
@@ -1131,8 +1135,8 @@
       <div class="wrap reveal">
         <div class="final">
           <h2>Schlussfolgerung</h2>
-          <p>Copilot ist in der Kanzlei hilfreich, wenn er wie ein schneller Entwurfs- und Strukturierungsassistent behandelt wird. Er ist gefährlich, wenn technische Treffer mit fachlicher Berechtigung verwechselt, Outputs ungeprüft übernommen oder vertrauliche Ergebnisse falsch abgelegt werden.</p>
-          <p><strong>Empfehlung:</strong> Freischaltung nur mit Berechtigungsreview, klarer Richtlinie, Meldeweg, dokumentierter Kurzschulung und konsequenter menschlicher Endprüfung.</p>
+          <p>Copilot ist in der Kanzlei hilfreich, wenn er wie ein schneller Entwurfs- und Strukturierungsassistent behandelt wird. Maßgeblich ist, technische Treffer nicht mit fachlicher Berechtigung zu verwechseln, Outputs zu prüfen und vertrauliche Ergebnisse richtig abzulegen.</p>
+          <p><strong>Empfehlung:</strong> Nutzung nur mit Berechtigungsreview, klarer Richtlinie, Meldeweg, dokumentierter Kurzschulung und konsequenter menschlicher Endprüfung.</p>
         </div>
       </div>
     </section>
