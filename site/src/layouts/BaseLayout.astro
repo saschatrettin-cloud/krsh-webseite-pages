@@ -21,6 +21,7 @@ interface Props {
    */
   structuredData?: Array<Record<string, unknown>>;
   pageClass?: string;
+  showSiteHeader?: boolean;
 }
 
 type NavItem = {
@@ -40,6 +41,7 @@ const {
   noindex,
   structuredData = [],
   pageClass = "onecol",
+  showSiteHeader = true,
 } = Astro.props;
 
 const computedTitle = fullTitle ?? `${title} | ${SITE.name}`;
@@ -162,63 +164,65 @@ const navItems: NavItem[] = [
   </head>
   <body>
     <div id="page" class={pageClass}>
-      <header class="site-header" data-compact-header>
-        <div class="site-header__inner">
-          <a class="site-brand" href="/" target="_self" aria-label="KRSH Startseite">
-            <img
-              src="/assets/krsh/krsh.jpg"
-              width="1200"
-              height="130"
-              alt="Kühnel Rosenmüller &amp; Kollegen, Rechtsanwälte &amp; Notare"
-              title="Kühnel Rosenmüller &amp; Kollegen, Rechtsanwälte &amp; Notare"
-            />
-          </a>
+      {showSiteHeader && (
+        <header class="site-header" data-compact-header>
+          <div class="site-header__inner">
+            <a class="site-brand" href="/" target="_self" aria-label="KRSH Startseite">
+              <img
+                src="/assets/krsh/krsh.jpg"
+                width="1200"
+                height="130"
+                alt="Kühnel Rosenmüller &amp; Kollegen, Rechtsanwälte &amp; Notare"
+                title="Kühnel Rosenmüller &amp; Kollegen, Rechtsanwälte &amp; Notare"
+              />
+            </a>
 
-          <div class="site-header__actions">
-            <a class="site-header__action-primary" href="/karriere/">
-              Karriere
-            </a>
-            <a
-              class="site-header__action-primary"
-              href="https://www.glaeubigerinformation.de/t/191/proceeding-search"
-              target="_blank"
-              rel="noopener"
-              aria-label="GIS Gläubigerinformation öffnen"
-            >
-              GIS
-            </a>
+            <div class="site-header__actions">
+              <a class="site-header__action-primary" href="/karriere/">
+                Karriere
+              </a>
+              <a
+                class="site-header__action-primary"
+                href="https://www.glaeubigerinformation.de/t/191/proceeding-search"
+                target="_blank"
+                rel="noopener"
+                aria-label="GIS Gläubigerinformation öffnen"
+              >
+                GIS
+              </a>
+            </div>
           </div>
-        </div>
 
-        <nav class="main site-nav" aria-label="Hauptnavigation">
-          <ul class="site-nav__list">
-            {navItems.map((item) => (
-              <li class:list={[item.items && "has-subnav", item.featured && "site-nav__item--featured"]}>
-                <a href={item.href}>{item.label}</a>
-                {item.items && (
-                  <ul class="site-nav__sub">
-                    {item.items.map((subItem) => (
-                      <li>
-                        {subItem.group ? (
-                          <span class="site-nav__group">{subItem.label}</span>
-                        ) : (
-                          <a
-                            href={subItem.href}
-                            target={subItem.external ? "_blank" : undefined}
-                            rel={subItem.external ? "noopener" : undefined}
-                          >
-                            {subItem.label}
-                          </a>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
+          <nav class="main site-nav" aria-label="Hauptnavigation">
+            <ul class="site-nav__list">
+              {navItems.map((item) => (
+                <li class:list={[item.items && "has-subnav", item.featured && "site-nav__item--featured"]}>
+                  <a href={item.href}>{item.label}</a>
+                  {item.items && (
+                    <ul class="site-nav__sub">
+                      {item.items.map((subItem) => (
+                        <li>
+                          {subItem.group ? (
+                            <span class="site-nav__group">{subItem.label}</span>
+                          ) : (
+                            <a
+                              href={subItem.href}
+                              target={subItem.external ? "_blank" : undefined}
+                              rel={subItem.external ? "noopener" : undefined}
+                            >
+                              {subItem.label}
+                            </a>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </header>
+      )}
 
       <slot />
 
